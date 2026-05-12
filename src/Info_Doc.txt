@@ -1,0 +1,23 @@
+app/ : "Contient toutes les pages + les routes"
+    ---> api/ : routes backend (API)
+      ---> cars: CRUD voitures
+      ---> auth: Login/Register
+
+components/ : "Contient les composants UI"
+features/ : "Contient la logique par fonctionnalite"
+    ===> UI
+    ===> Appel API
+    ===> Logique
+
+lib/ : "Contient la connexion et la configuration (DB, outils)"
+models/ : "Contient schemas MongoDB"
+services/ : "Contient la logique metier"
+    ===> separer la logique complexe
+    ===> eviter de surcharges les routes API
+
+actions/ : "Contient le server action (Next.js)"
+    ===> permet de faire du backend sans API explicite
+hooks/ : "Contient les hooks frontend"
+utils/ : "Contient les fonctions utilitaires"
+constants/ : "Contient les constantes globales"
+types/ : "Contient les types (si TypeScript)"

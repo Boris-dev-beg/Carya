@@ -27,9 +27,11 @@ export async function PUT(
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
 
+  const { id } = await context.params; 
   await Mongoose_connection();
   const car = await carModel.findById(id);
 

@@ -25,6 +25,7 @@ export async function PUT(
 // ! Recuperation d'une seule voiture
 export async function GET(
   req: Request,
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
   await Mongoose_connection();

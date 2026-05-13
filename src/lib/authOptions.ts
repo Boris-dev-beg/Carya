@@ -62,7 +62,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async redirect({ url, baseUrl }) {
       // Redirige toujours vers le dashboard après login
-      return "/dashboard";
+      return "/v1/Accueil";
     },
   },
 };

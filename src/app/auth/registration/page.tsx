@@ -40,7 +40,7 @@ export default function RegisterPage() {
     try {
       // ? Recuperation de la reponse de verification de l'existance prealable de l'utilisateur
       const response_UserExist = await fetch(
-        "http://localhost:3000/api/auth/userExists",
+        "/api/auth/userExists",
         {
           method: "POST",
           headers: { "content-type": "application/json" },

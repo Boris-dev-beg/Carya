@@ -5,11 +5,9 @@ import { NextResponse, NextRequest } from "next/server";
 // ! Modification d'une voiture
 export async function PUT(
   request: NextRequest,
-  // context: { params: Promise<{ id: string }>
-  { params }: { params: { id: string } },
+  context: { params: Promise<{ id: string }> },
 ) {
-  // const { id } = await context.params;
-  const { id } = await params;
+  const { id } = await context.params;
   const formData = await request.json();
 
   await Mongoose_connection();
@@ -27,7 +25,6 @@ export async function PUT(
 // ! Recuperation d'une seule voiture
 export async function GET(
   req: Request,
-  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
   await Mongoose_connection();

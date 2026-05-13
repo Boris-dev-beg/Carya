@@ -3,9 +3,9 @@ import { userModel } from '@/src/models/User';
 import { NextResponse } from 'next/server';
 export async function GET(
     req: Request,
-    {params}:{params: {id: string}}
+  context: { params: Promise<{ id: string }> },
 ){
-    const {id} = await params
+  const { id } = await context.params;
     try{
         await Mongoose_connection()
 

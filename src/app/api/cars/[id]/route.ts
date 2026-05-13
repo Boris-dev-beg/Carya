@@ -6,15 +6,16 @@ import { NextResponse, NextRequest } from "next/server";
 export async function PUT(
   request: NextRequest,
   // context: { params: Promise<{ id: string }>
-  { params }: { params: { id: string } 
-}
+  { params }: { params: { id: string } },
 ) {
   // const { id } = await context.params;
   const { id } = await params;
   const formData = await request.json();
 
   await Mongoose_connection();
-  const updatedCar = await carModel.findByIdAndUpdate(id, formData, { new: true });
+  const updatedCar = await carModel.findByIdAndUpdate(id, formData, {
+    new: true,
+  });
 
   if (!updatedCar) {
     return NextResponse.json({ error: "Car not found" }, { status: 404 });
@@ -26,12 +27,9 @@ export async function PUT(
 // ! Recuperation d'une seule voiture
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
-  context: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> },
 ) {
-  const { id } = await params;
-
-  const { id } = await context.params; 
+  const { id } = await context.params;
   await Mongoose_connection();
   const car = await carModel.findById(id);
 

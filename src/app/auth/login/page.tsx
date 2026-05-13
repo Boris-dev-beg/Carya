@@ -37,9 +37,9 @@ export default function Loginpage() {
 
       if (res?.error) {
         setError("Invalid credentials");
-      }
+        console.log("Erreur:", res.error)
+      }else  route.push("/v1/Accueil")
 
-      if (!res?.error) route.push("/v1/Accueil");
     } catch (error) {
       console.log("Erreur rencontrée :", error);
     }

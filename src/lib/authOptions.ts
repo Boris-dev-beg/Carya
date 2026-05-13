@@ -55,4 +55,14 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/login",
+  },
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      // Redirige toujours vers le dashboard après login
+      return "/dashboard";
+    },
+  },
 };

@@ -5,9 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 // ! Recuperation du plan selectionner de l'utilisateur connecté a partir de son id
-export async function GET(req: NextRequest, {params}: { params: { id: string } }) {
-    
-  const UserId = params.id; // ? Recuperation de l'id de l'utilisateur a partir des params de la requete
+export async function POST(req: NextRequest) {
+  const UserId = await req.json(); // ? Recuperation de l'id de l'utilisateur
 
   try {
     await Mongoose_connection();

@@ -33,8 +33,12 @@ const fecthPlans = async () => {
 // ? Recuperation du plan selectionner de l'utilisateur connecté
 const fetchSelectedPlan = async (userId : string) => {
   try {
-    const response = await fetch(`/api/subscription/subscribed/${userId}`, {
-      cache: "reload",
+    const response = await fetch(`/api/subscription/currentPlan`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
     });
 
     if (!response.ok) throw new Error("Failed to load your plan");

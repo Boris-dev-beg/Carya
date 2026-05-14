@@ -61,6 +61,7 @@ const getInfoSeller = async (id: string) => {
     return;
   }
 };
+
 export default function Details() {
   // ! States // ! Hooks
   const params = useSearchParams(); // ? Permet de recuperer les parametres de l'URL

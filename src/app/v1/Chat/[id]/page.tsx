@@ -161,7 +161,7 @@ export default function Chat_session() {
                 <div className="bg-gray-300 border-2 border-green-600 rounded-full size-15 flex items-center justify-center">
                   <span className="w-6 h-6 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></span>
                 </div>
-              ) : (
+              ) : car ? (
                 <Image
                   src={car?.photos[0]?.image_url}
                   alt={car?.photos[0]?.image_url}
@@ -169,7 +169,7 @@ export default function Chat_session() {
                   sizes="(max-width: 640px) 20vw"
                   className="object-cover rounded-full"
                 />
-              )}
+              ): (<p>Invalid URL</p>)}
               <span className="absolute bottom-1 z-10 right-0 size-2 bg-green-600 rounded-full"></span>
             </span>
             <span className="p-2 flex flex-col items-start justify-center gap-0">

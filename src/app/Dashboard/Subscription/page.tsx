@@ -5,7 +5,7 @@ import { ObjectId } from "mongoose";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/src/components/load/loading";
-import { getUser } from "@/src/lib/getUser";
+import {getUser} from "@/src/lib/GetUser.ts";
 
 // ? Recuperation des plans
 const fecthPlans = async () => {

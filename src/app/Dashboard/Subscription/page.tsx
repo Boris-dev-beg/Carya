@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/src/components/load/loading";
 import {GetUser} from "@/src/lib/GetUser";
+import { useSession } from "next-auth/react";
 
 // ? Recuperation des plans
 const fecthPlans = async () => {
@@ -47,6 +48,8 @@ const fetchSelectedPlan = async () => {
 
 export default function Subscription() {
   // ! States / Etats
+  const {data: session} = useSession();
+  const email = session?.user?.email;
   const [Plans, setPlans] = useState<
     {
       benefits: string[];
@@ -90,7 +93,7 @@ export default function Subscription() {
       }
     };
     testPlan();
-  }, [Plans, currentPlan, route]);
+  }, [Plans, currentPlan, route, email]);
 
   if (loading) {
     return <Loading />;

@@ -38,9 +38,9 @@ export const authOptions: NextAuthOptions = {
           await Mongoose_connection();
           const user = await userModel.findOne({ email });
 
-          if (!user) return null; // ? Utilisateur non trouve
+          if (!user) return null; // ? Utilisateur non trouvé
 
-          const passwordsMatch = await bcrypt.compare(password, user?.password);
+          const passwordsMatch = await bcrypt.compare(password, user?.password); // ? Compare le mot de passe saisi avec celui dans la base de données
 
           if (!passwordsMatch) return null; // ? Mot de passe incorrect
 

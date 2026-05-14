@@ -5,7 +5,7 @@ import { ObjectId } from "mongoose";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/src/components/load/loading";
-import {getUser} from "@/src/lib/getUser";
+import { getUser } from "@/src/lib/getUser";
 
 // ? Recuperation des plans
 const fecthPlans = async () => {
@@ -15,8 +15,7 @@ const fecthPlans = async () => {
       cache: "reload",
     });
 
-    if (!response.ok)
-      return []
+    if (!response.ok) return [];
 
     // ? Recuperation des plans
     const data = await response.json();
@@ -33,9 +32,7 @@ const fecthPlans = async () => {
 // ? Recuperation du plan selectionner
 const fetchSelectedPlan = async () => {
   try {
-    const response = await fetch(
-      "/api/subscription/subscribed",
-    );
+    const response = await fetch("/api/subscription/subscribed");
 
     if (!response.ok) throw new Error("Failed to load your plan");
 
@@ -62,8 +59,6 @@ export default function Subscription() {
   const [currentPlan, setCurrentPlan] = useState<{ planId: ObjectId }>();
   const route = useRouter();
   const [loading, setLoading] = useState(true);
-  const data = await getUser(email as string); // ? Recuperation de l'utilisateur connecté
-  const userId = data?.user?._id;
 
   // ! Comportements / functions
   useEffect(() => {
@@ -78,10 +73,16 @@ export default function Subscription() {
     getPlans();
   }, []);
   useEffect(() => {
-    const testPlan = () => {
+    const testPlan = async () => {
+      const data = await getUser(email as string); // ? Recuperation de l'utilisateur connecté;
+      const userId = data?.user?._id;
+      
       if (!Plans || Plans.length === 0) return;
 
-      const match = Plans.find((plan) => (plan._id === currentPlan?.planId) && (currentPlan?.userId === userId)); // ? Verification de l'existence d'un plan correspondant a l'id du plan de l'utilisateur connecté
+      const match = Plans.find(
+        (plan) =>
+          plan._id === currentPlan?.planId && currentPlan?.userId === userId,
+      ); // ? Verification de l'existence d'un plan correspondant a l'id du plan de l'utilisateur connecté
       if (match) {
         route.push("/Dashboard");
       } else {

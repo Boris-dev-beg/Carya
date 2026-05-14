@@ -244,18 +244,35 @@ export default function Details() {
               </h1>
               <ButtonContact
                 id={car ? car?._id : ""}
-                sellerPhone={seller?.phone || "698902641"}
+                sellerPhone={
+                  (seller?.phone || "698902641").replace(/\s/g, "") // ? On retire les espaces du numero de telephone pour s'assurer qu'il est au bon format pour WhatsApp
+                }
               />
             </span>
             <span className="flex flex-col">
               <span className=" flex gap-2 items-center justify-start py-2">
-                <User /> {loading ? "Chargement..." : seller?.name}
+                <User />{" "}
+                {loading
+                  ? "Chargement..."
+                  : seller
+                    ? seller?.name
+                    : "Vendeur non disponible"}
               </span>
               <span className=" flex gap-2 items-center justify-start py-2">
-                <Phone /> Tel: {loading ? "Chargement..." : seller?.phone}
+                <Phone /> Tel:{" "}
+                {loading
+                  ? "Chargement..."
+                  : seller
+                    ? seller?.phone?.replace(/(\d{3})(?=\d{3})/g, "$1 ") // ? Formater le numéro de téléphone en ajoutant des espaces tous les 3 chiffres
+                    : "Téléphone non disponible"}
               </span>
               <span className=" flex gap-2 items-center justify-start py-2">
-                <Mail /> {loading ? "Chargement..." : seller?.email}
+                <Mail />{" "}
+                {loading
+                  ? "Chargement..."
+                  : seller
+                    ? seller?.email
+                    : "Email non disponible"}
               </span>
             </span>
           </Accordion>

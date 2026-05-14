@@ -169,13 +169,13 @@ export default function Chat_session() {
                   sizes="(max-width: 640px) 20vw"
                   className="object-cover rounded-full"
                 />
-              ): (<p>Invalid URL</p>)}
+              ): (<p>Image non disponible</p>)}
               <span className="absolute bottom-1 z-10 right-0 size-2 bg-green-600 rounded-full"></span>
             </span>
             <span className="p-2 flex flex-col items-start justify-center gap-0">
-              <h1 className="font-bold"> {loading ? "Chargement..." : seller?.name}</h1>
+              <h1 className="font-bold"> {loading ? "Chargement..." : seller ? seller?.name : "Vendeur non disponible"}</h1>
               <h1 className="font-bold text-xl">
-                {loading ? "Chargement..." : `${car?.brand} ${car?.model} ${car?.year}`}
+                {loading ? "Chargement..." : car ? `${car?.brand} ${car?.model} ${car?.year}` : "Voiture non disponible"}
               </h1>
             </span>
           </div>
@@ -212,7 +212,7 @@ export default function Chat_session() {
           )}
         </div>
       </header>
-      <main className="flex-1 flex flex-col justify-center items-center md:w-3/4 border-x border-gray-400 bg-[url('/pattern.jpg')] bg-cover bg-center bg-no-repeat bg-fixed max-h-[80vh]">
+      <main className="flex-1 flex flex-col justify-center items-center w-full md:w-3/4 border-x border-gray-400 bg-[url('/pattern.jpg')] bg-cover bg-center bg-no-repeat bg-fixed max-h-[80vh]">
         {/* Message Container */}
         <div className="flex-1 flex flex-col gap-1 py-2 px-4 md:mx-10 w-full h-[70vh] max-h-full overflow-y-auto scroll-m-0 backdrop-blur-xs">
           {loading ? (

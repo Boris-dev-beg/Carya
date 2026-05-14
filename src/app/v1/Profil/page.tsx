@@ -43,7 +43,7 @@ export default function Profil_Buyer() {
   const [message, setMessage] = useState("");
   const [phone, setPhone] = useState("06 23 45 67 89");
   const location = "Bafoussam, Cameroun";
-  
+
   // ! Comportements / Functions
   useEffect(() => {
     // ? recuperation des infos de l'utilisateur
@@ -91,7 +91,12 @@ export default function Profil_Buyer() {
                   <Mail /> {data?.user?.email}
                 </p>
                 <p className="flex items-center justify-start gap-2">
-                  <Phone /> {phone?.replace(/(\d{3})(?=\d{3})/g, "$1 ")} // ? Formater le numéro de téléphone en ajoutant des espaces tous les 3 chiffres
+                  <Phone />{" "}
+                  {phone?.replace(
+                    /(\d{3})(?=\d{3})/g,
+                    "$1 ",
+                  ) // ? Formater le numéro de téléphone en ajoutant des espaces tous les 3 chiffres
+                  }
                 </p>
                 <p className="flex items-center justify-start gap-2">
                   <MapPin /> {location}
@@ -197,6 +202,9 @@ interface CardProps {
 }
 
 function Car({ car }: CardProps) {
+  if (!car.src_image || !car.name_car) {
+    return null; // ? Si les données de la voiture sont invalides, ne rien afficher
+  }
   return (
     <div className="flex items-center justify-center shadow-md shadow-gray-300 w-full md:h-40">
       <span className="relative w-1/3 h-full rounded-l-md">

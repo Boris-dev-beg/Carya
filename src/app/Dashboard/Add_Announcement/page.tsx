@@ -180,7 +180,7 @@ export default function Add_Announcement() {
             <input
               type="text"
               name="mileage"
-              value={formData.mileage.replace(/\D/g, "")} // ? Supprimer les caractères non numériques
+              value={formData.mileage.toString().replace(/\D/g, "")} // ? Supprimer les caractères non numériques
               onChange={handleChange}
               placeholder="Indiquer les Km"
               className="border border-gray-400 rounded-md p-2 md:w-2/3 w-full"
@@ -333,7 +333,7 @@ export default function Add_Announcement() {
             </button>
             <input
               name="price"
-              value={formData.price.replace(/\D/g, "")} // ? Supprimer les caractères non numériques
+              value={formData.price?.toString().replace(/\D/g, "")} // ? Supprimer les caractères non numériques
               onChange={handleChange}
               type="text"
               className="outline-none border border-gray-400 px-2 py-1 rounded-md rounded-l-none border-l-0"

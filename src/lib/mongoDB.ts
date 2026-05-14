@@ -12,14 +12,14 @@ const Mongoose_connection = async () => {
     return;
   }
   
-  const uri = process.env.MONGODB_URI as string;
+  const uri = process.env.MongoDB_URI as string;
   try {
 if (!uri) {
-  throw new Error("MONGODB_URI is not defined");
+  throw new Error("MongoDB_URI is not defined");
 }
 await mongoose.connect(uri);
   
-    // await mongoose.connect(process.env.MONGODB_URI as string);
+    // await mongoose.connect(process.env.MongoDB_URI as string);
     isConnected = true;
     console.log("MongoDB connection successful");
   } catch (err) {

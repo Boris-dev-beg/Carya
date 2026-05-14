@@ -37,24 +37,3 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
-  try {
-    await Mongoose_connection();
-
-    const Plan = await subscriptionModel.findOne({},"planId"); // ? Recuperation du plan de l'utilisateur connecté (a adapter pour recuperer le plan de l'utilisateur connecté) 
-    return NextResponse.json(
-      {
-        Plan,
-      },
-      { status: 200 },
-    );
-  } catch (err) {
-    console.log("Error:", err);
-    return NextResponse.json(
-      {
-        Error: err,
-      },
-      { status: 500 },
-    );
-  }
-}

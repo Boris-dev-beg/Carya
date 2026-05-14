@@ -30,10 +30,12 @@ const fecthPlans = async () => {
   }
 };
 
-// ? Recuperation du plan selectionner
-const fetchSelectedPlan = async () => {
+// ? Recuperation du plan selectionner de l'utilisateur connecté
+const fetchSelectedPlan = async (userId : string) => {
   try {
-    const response = await fetch("/api/subscription/subscribed");
+    const response = await fetch(`/api/subscription/subscribed/${userId}`, {
+      cache: "reload",
+    });
 
     if (!response.ok) throw new Error("Failed to load your plan");
 
@@ -59,26 +61,32 @@ export default function Subscription() {
       _id: ObjectId;
     }[]
   >([]);
-  const [currentPlan, setCurrentPlan] = useState<{ planId: ObjectId }>();
+  const [currentPlan, setCurrentPlan] = useState<{ planId: ObjectId, userId: ObjectId }>();
+  const [userId, setUserId] = useState<ObjectId>();
   const route = useRouter();
   const [loading, setLoading] = useState(true);
 
   // ! Comportements / functions
+  // ? useEffect pour la recuperation des plans et du plan selectionner
   useEffect(() => {
     const getPlans = async () => {
       const fetchedPlans = await fecthPlans();
       setPlans(fetchedPlans); // ? Mise a jours du tableau de plans
 
-      const currentPlan = await fetchSelectedPlan();
+      const data = await GetUser(email as string); // ? Recuperation de l'utilisateur connecté;
+      const userId: ObjectId = data?.user?._id;
+      setUserId(userId);
+
+      const currentPlan = await fetchSelectedPlan(userId as unknown as string); // ? Recuperation du plan selectionner de l'utilisateur connecté
       setCurrentPlan(currentPlan);
       console.log("Your current plan is :", currentPlan);
     };
     getPlans();
-  }, []);
+  }, [email]);
+
+  // ? useEffect pour la verification de l'existence d'un plan correspondant a l'id du plan de l'utilisateur connecté
   useEffect(() => {
     const testPlan = async () => {
-      const data = await GetUser(email as string); // ? Recuperation de l'utilisateur connecté;
-      const userId = data?.user?._id;
       
       if (!Plans || Plans.length === 0) return;
 
@@ -93,7 +101,7 @@ export default function Subscription() {
       }
     };
     testPlan();
-  }, [Plans, currentPlan, route, email]);
+  }, [Plans, currentPlan, route, userId]);
 
   if (loading) {
     return <Loading />;

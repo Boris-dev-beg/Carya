@@ -79,6 +79,13 @@ export default function Add_Announcement() {
       photos.map((val) => dataForm.append("photos[]", val));
     }
 
+    for(const [key, value] of dataForm.entries()) {
+      if(!value || value.toString().trim() === "") {
+        setError("Veuillez remplire correctement les champs ! ");
+        return;
+      }
+    }
+
     try {
       setLoading(true); // ? Activation de l'effet de loading lorsque les donnees sont en cours de traitement
 

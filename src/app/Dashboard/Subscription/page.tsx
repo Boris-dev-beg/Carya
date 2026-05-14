@@ -31,14 +31,14 @@ const fecthPlans = async () => {
 };
 
 // ? Recuperation du plan selectionner de l'utilisateur connecté
-const fetchSelectedPlan = async (userId : string) => {
+const fetchSelectedPlan = async (userId : ObjectId) => {
   try {
     const response = await fetch(`/api/subscription/currentPlan`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId }),
+      body: JSON.stringify({ userId: userId.toString() }),
     });
 
     if (!response.ok) throw new Error("Failed to load your plan");
@@ -74,6 +74,7 @@ export default function Subscription() {
   // ? useEffect pour la recuperation des plans et du plan selectionner
   useEffect(() => {
     const getPlans = async () => {
+
       const fetchedPlans = await fecthPlans();
       setPlans(fetchedPlans); // ? Mise a jours du tableau de plans
 
@@ -81,8 +82,9 @@ export default function Subscription() {
       const userId: ObjectId = data?.user?._id;
       setUserId(userId);
 
-      const currentPlan = await fetchSelectedPlan(userId as unknown as string); // ? Recuperation du plan selectionner de l'utilisateur connecté
+      const currentPlan = await fetchSelectedPlan(userId); // ? Recuperation du plan selectionner de l'utilisateur connecté
       setCurrentPlan(currentPlan);
+
       console.log("Your current plan is :", currentPlan);
     };
     getPlans();
@@ -96,8 +98,9 @@ export default function Subscription() {
 
       const match = Plans.find(
         (plan) =>
-          plan._id === currentPlan?.planId && currentPlan?.userId === userId,
-      ); // ? Verification de l'existence d'un plan correspondant a l'id du plan de l'utilisateur connecté
+          plan._id === currentPlan?.planId && currentPlan?.userId === userId, // ? Verification de l'existence d'un plan correspondant a l'id du plan de l'utilisateur connecté
+      );
+
       if (match) {
         route.push("/Dashboard");
       } else {
@@ -105,7 +108,7 @@ export default function Subscription() {
       }
     };
     testPlan();
-  }, [Plans, currentPlan, route, userId]);
+  }, [Plans, currentPlan, userId, route]);
 
   if (loading) {
     return <Loading />;

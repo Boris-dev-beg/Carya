@@ -13,6 +13,7 @@ interface PlansProps {
   duration: number;
 }
 
+// ? Recuperation de l'utilisateur connecter a partir de son email
 const getUser = async (email: string) => {
   try {
     const response = await fetch("/api/getUser", {
@@ -41,7 +42,7 @@ export function SubscriptionPlans({
   duration,
 }: PlansProps) {
   // ! Etats / States
-  const { data } = useSession();
+  const { data } = useSession(); // ? Recuperation de la session de l'utilisateur connecter
   const email = data?.user?.email;
   const route = useRouter()
 
@@ -67,13 +68,15 @@ export function SubscriptionPlans({
         );
 
       const data = await response.json();
-      alert(
-        "Your subscription plan has been successfully created, thank you for your trust",
+      console.log(
+        "Your subscription plan has been successfully created, thank you for your trust.",
       );
       console.log("Donnees de la reponse:", data);
       route.push("/Dashboard");
+      return;
     } catch (err) {
-      console.log("Error:", err);
+      console.log("Error:", err);;
+      route.push("/Dashboard");
       return;
     }
   };

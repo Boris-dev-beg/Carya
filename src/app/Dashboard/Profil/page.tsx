@@ -92,7 +92,6 @@ const formatDate = (dateString: string) => {
   return message; // ? Retourne le message formaté
 };
 
-
 // ? Tableau de voitures par defaut
 const TabCars: Car[] = [
   {
@@ -203,10 +202,10 @@ export default function Profil_Seller() {
                   <Mail /> {email}
                 </p>
                 <p className="flex items-center justify-start gap-2">
-                  <Phone /> {phone ? phone.replace(
-                    /(\d{3})(?=\d{3})/g,
-                    "$1 ",
-                  ) : null} // ? Formater le numéro de téléphone en ajoutant des espaces tous les 3 chiffres
+                  <Phone />{" "}
+                  {
+                    phone ? phone.replace(/(\d{3})(?=\d{3})/g, "$1 ") : null // ? Formater le numéro de téléphone en ajoutant des espaces tous les 3 chiffres
+                  }
                 </p>
                 <p className="flex items-center justify-start gap-2">
                   <MapPin /> Bafoussam, Cameroun

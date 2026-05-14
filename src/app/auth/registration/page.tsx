@@ -16,7 +16,7 @@ import { useState } from "react";
 
 export default function RegisterPage() {
   // ! Etats
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
   const [role, setRole] = useState("buyer");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,9 +28,10 @@ export default function RegisterPage() {
   // ! Comportements
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
 
-    if ( // ? Verification de la validitee des champs
+    if (
+      // ? Verification de la validitee des champs
       name.trim() === "" ||
       email.trim() === "" ||
       password.trim() === "" ||
@@ -42,46 +43,43 @@ export default function RegisterPage() {
 
     try {
       // ? Recuperation de la reponse de verification de l'existance prealable de l'utilisateur
-      const response_UserExist = await fetch(
-        "/api/auth/userExists",
-        {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ email }),
-        },
-      );
+      const response_UserExist = await fetch("/api/auth/userExists", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
 
-      if (response_UserExist.ok) { // ? S'il existe, il est renvoyer vers la pge de login
+      if (response_UserExist.ok) {
+        // ? S'il existe, il est renvoyer vers la pge de login
         alert("User Already Exist");
+        console.log("User already exist:", await response_UserExist.json());
         route.push("/auth/login");
-        return
+        return;
       }
 
       // ? Reponse de creation de l'utilisateur s'il n'existe pas
-      const response_CreateUser = await fetch(
-        "/api/auth/registration",
-        {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ name, email, phone, password, role }),
-        },
-      );
+      const response_CreateUser = await fetch("/api/auth/registration", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ name, email, phone, password, role }),
+      });
 
-      if (!response_CreateUser.ok) { // ? Si la creation n'a pas reussi
+      if (!response_CreateUser.ok) {
+        // ? Si la creation n'a pas reussi
         alert("An error occurred");
-        setLoading(false)
+        setLoading(false);
         return;
       }
       console.log(response_CreateUser);
-    setLoading(false)
+      setLoading(false);
       route.push("/auth/login"); // ? Renvoi vers la page de Login si la creation a reussi
     } catch (error) {
       console.log("Erreur :", error);
-      setLoading(false)
+      setLoading(false);
     }
 
     // ? Reset de tout les champs;
-    setLoading(false)
+    setLoading(false);
     setError("");
     setRole("buyer");
     setEmail("");
@@ -91,7 +89,9 @@ export default function RegisterPage() {
   };
 
   // ! Return / Rendu
-  if(loading){ return <Loading />}
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <form
       onSubmit={handleSubmit}
@@ -103,7 +103,7 @@ export default function RegisterPage() {
         </h2>
         <p className="text-center pt-2">Creez votre compte en tant que</p>
         <p className="w-full text-center font-bold border border-emerald-400 text-emerald-400 py-1">
-          {role ==="seller" ? "Vendeur":"Acheteur"}
+          {role === "seller" ? "Vendeur" : "Acheteur"}
         </p>
         <span className="w-full flex gap-2 items-center justify-center">
           <Role

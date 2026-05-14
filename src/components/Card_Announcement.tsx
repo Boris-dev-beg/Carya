@@ -43,7 +43,7 @@ export const CardAnnouncement = ({
         <div className="flex flex-col gap-1 w-full">
           <span className="w-full flex justify-between items-start pr-5 pt-1">
             <h1 className="font-bold text-[18px] md:text-2xl uppercase">
-              {name}
+              {name?.toLocaleUpperCase()}
             </h1>
             <h1 className="text-xl md:text-2xl font-black">
               {price.toLocaleString()} <b className="text-base">Fcfa</b>

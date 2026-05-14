@@ -30,10 +30,12 @@ export default function Loginpage() {
 
     try {
       const res = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
+  email,
+  password,
+  callbackUrl: "/v1/Accueil",
+});
+
+
 
       if (res?.error) {
         setError("Invalid credentials");

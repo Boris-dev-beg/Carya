@@ -49,18 +49,27 @@ export default function Add_Announcement() {
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
 
-    // ? verification de la validite des valeurs du formulaire
-    const TabVal = Object.values(formData);
-    const isNull = TabVal.some(
-      (v) => (v as string).trim() === "" || (v as number) <= 0, 
-    ); // ? Verification de l'existence de valeurs null ou vides ou inferieures ou egales a 0 dans les valeurs du formulaire
+    // ? Verification que les champs ne sont pas vides ou invalides
+    const isNull = Object.entries(formData).some(([key, val]) => {
+      if (typeof val === "string") {
+        return val.trim() === "";
+      }
+      if (typeof val === "number") {
+        return val <= 0;
+      }
+      return false;
+    });
 
     if (isNull) {
       // ? Si les valeurs sont null envoyer un message d'erreur
       setError("Veuillez remplire correctement les champs ! ");
       return;
     }
-    
+    if (photos.length === 0) {
+      setError("Veuillez ajouter au moins une photo !");
+      return;
+    }
+
     setError("");
     const data = await GetUser(PrevEmail); // ? Recuperation des information sur l'utilisateur
     const ownerId = data?.user?._id; // ? Recuperation de son ID
@@ -78,13 +87,6 @@ export default function Add_Announcement() {
     dataForm.append("ownerId", ownerId);
     if (photos.length > 0) {
       photos.map((val) => dataForm.append("photos[]", val));
-    }
-
-    for(const [key, value] of dataForm.entries()) {
-      if(!value || value.toString().trim() === "") {
-        setError("Veuillez remplire correctement les champs ! ");
-        return;
-      }
     }
 
     try {
@@ -110,7 +112,7 @@ export default function Add_Announcement() {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >, 
+    >,
   ) => {
     const { value, name } = e.target;
     setFormData((prev) => ({

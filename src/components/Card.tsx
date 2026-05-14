@@ -45,7 +45,7 @@ export default function Card({ car }: {car: Cars}) {
       <div className="flex flex-col justify-between w-1/2 h-full p-2 pb-1 shadow-md shadow-white/70">
         <span className="flex flex-col py-5 px-3 mb-2 h-full w-55 lg:w-60 border-b border-b-gray-500">
           <h1 className="font-bold text-2xl line-clamp-1">
-            {car?.brand} {car?.model}
+            {car?.brand?.toLocaleUpperCase()} {car?.model?.toLocaleUpperCase()}
           </h1>
           <h1 className="font-bold text-2xl m-2">{car?.price?.toLocaleString()} Fcfa</h1>
           <p className="text-base">

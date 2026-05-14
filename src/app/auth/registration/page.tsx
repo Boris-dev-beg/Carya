@@ -69,12 +69,15 @@ export default function RegisterPage() {
 
       if (!response_CreateUser.ok) { // ? Si la creation n'a pas reussi
         alert("An error occurred");
+        setLoading(false)
         return;
       }
       console.log(response_CreateUser);
+    setLoading(false)
       route.push("/auth/login"); // ? Renvoi vers la page de Login si la creation a reussi
     } catch (error) {
       console.log("Erreur :", error);
+      setLoading(false)
     }
 
     // ? Reset de tout les champs;

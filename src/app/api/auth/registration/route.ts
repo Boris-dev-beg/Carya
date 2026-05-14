@@ -31,12 +31,14 @@ export async function POST(req: Request) {
     );
   } catch (error) {
     console.log("Erreur de creation de l'utilisateur :", error);
-    return NextResponse.json(
-      {
-        Error: error,
-      },
-      { status: 500 },
-    );
+    // return NextResponse.json(
+    //   {
+    //     Error: error,
+    //   },
+    //   { status: 500 },
+    // );
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
+
   }
 }
 

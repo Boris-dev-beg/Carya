@@ -108,14 +108,17 @@ const Tabcars: Cars[] = [
 export default function Annonces() {
   // ! States / Etats
   const [cars, setCars] = useState<Cars[]>(Tabcars);
+  const [loading, setLoading] = useState(true); // ? State pour stocker l'etat de chargement des voitures
 
   // ! Fonctions / Comportements
   // ? recuperation des voitures
   useEffect(() => {
     const fetchCars = async () => {
+      setLoading(true); // ? On set l'etat de chargement a true avant de recuperer les infos des voitures
       const cars = await getCars();
       setCars((prev) => [...prev, ...cars]);
       console.log("Cars: ", cars);
+      setLoading(false); // ? On set l'etat de chargement a false une fois les infos recuperées
     };
     fetchCars();
   }, []);
@@ -124,11 +127,15 @@ export default function Annonces() {
   return (
     <div className="flex flex-col items-center justify-between max-h-screen h-screen w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center w-full md:px-10 py-3 gap-3 overflow-y-auto">
-        {cars? (
+        {loading ? (
+          <Loading />
+        ) : cars ? (
           cars.map((car, index) => (
-          <CarCard key={index} car={car} />
-        ))
-        ): (<Loading />)}
+            <CarCard key={index} car={car} />
+          ))
+        ) : (
+          <p>Aucune voiture disponible</p>
+        )}
       </div>
       <div className="flex gap-1 items-center justify-center py-2">
         {/* Pagination */}

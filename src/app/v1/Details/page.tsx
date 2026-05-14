@@ -34,17 +34,15 @@ const getCar = async (id: string) => {
   try {
     const res = await fetch(`/api/cars/${id}`); // ? Recuperation des infos de la voiture a partir de son ID
 
-    if (!res.ok) 
-      throw new Error("Probleme de recuperation de la voiture !");
+    if (!res.ok) throw new Error("Probleme de recuperation de la voiture !");
 
     const car = await res.json();
 
     console.log("Car Data:", car);
-    return {car};
+    return { car };
   } catch (err) {
-
     console.log("Error Finded:", err);
-    return {car: null};
+    return { car: null };
   }
 };
 // ? Recuperation des Infos du vendeur a partir de son ID
@@ -68,19 +66,22 @@ export default function Details() {
   const id = params.get("id"); // ? Recuperation de l'ID de la voiture a partir de l'URL
   const [car, setCar] = useState<Cars>(); // ? State pour stocker les infos de la voiture
   const [seller, setSeller] = useState<User>(); // ? State pour stocker les infos du vendeur
+  const [loading, setLoading] = useState(true); // ? State pour stocker l'etat de chargement des infos de la voiture et du vendeur
 
   // ! Functions // ! UseEffects
   useEffect(() => {
     // ? Fonction pour recuperer les infos de la voiture et du vendeur a partir de l'ID de la voiture
     const fecthCar = async () => {
-      const {car} = await getCar(id as string); // ? Recuperation des infos de la voiture a partir de son ID
-      
+      const { car } = await getCar(id as string); // ? Recuperation des infos de la voiture a partir de son ID
+
       if (car !== null) {
         const ownerId = car?.ownerId as string;
         const user = await getInfoSeller(ownerId); // ? Recuperation des infos du vendeur a partir de son ID
+        
         setCar(car); // ? On set la voiture dans le state pour pouvoir l'afficher dans le composant
         setSeller(user); // ? On set le vendeur dans le state pour pouvoir l'afficher dans le composant
       }
+      setLoading(false); // ? On set l'etat de chargement a false une fois les infos recuperées
     };
     fecthCar(); // ? On appelle la fonction pour recuperer les infos de la voiture et du vendeur a partir de l'ID de la voiture
   }, [id]);
@@ -88,21 +89,32 @@ export default function Details() {
   console.log("Seller:", seller);
 
   // ! Render // ! JSX
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        {/* Spinner */}
+        <div className="w-10 h-10 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+        <p>Chargement en cours...</p>
+      </div>
+    );
+  }
   return (
     <section className="flex flex-col max-w-screen w-[99vw]">
       <header className="px-5 py-3 text-start bg-white">
         <h1 className="font-bold text-3xl px-2 uppercase">
-          {car?.brand} {car?.model} {car?.year}
+          {loading ? "Chargement..." :`${car?.brand} ${car?.model} ${car?.year}`}
         </h1>
-        <p className="px-2 text-base font-bold">
-          {car?.status} | {car?.mileage} km . {car?.fuel} . {car?.transmission}
+        <p className="px-2 text-sm">
+          {loading ? "Chargement..." : car?.status} | {loading ? "Chargement..." : car?.mileage} km . {loading ? "Chargement..." : car?.fuel} . {loading ? "Chargement..." : car?.transmission}
         </p>
       </header>
       <main className="flex-1 w-full flex flex-col sm:flex-row sm:items-start items-center p-3 gap-2">
         <div className="w-full sm:w-1/2 lg:w-2/3 flex flex-col gap-2">
           <div className="flex flex-col w-full gap-1 lg:h-130 bg-white">
             <span className="relative h-60 lg:h-full w-full border border-gray-200">
-              {car ? (
+              {loading ? (
+                <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+              ) : (
                 <Image
                   src={car?.photos[0]?.image_url as string}
                   alt={car?.photos[0]?.image_url as string}
@@ -118,7 +130,9 @@ export default function Details() {
             </span>
             <span className="grid grid-cols-4 grid-rows-1 gap-1 p-2">
               <span className="relative h-20 lg:h-30 w-full scale-90 ring ring-emerald-700 p-3">
-                {car ? (
+                {loading ? (
+                  <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+                ) : (
                   <Image
                     src={car?.photos[1]?.image_url as string}
                     alt={car?.photos[1]?.image_url as string}
@@ -132,7 +146,9 @@ export default function Details() {
                 )}
               </span>
               <span className="relative h-20 lg:h-30 w-full border border-gray-200">
-                {car ? (
+                {loading ? (
+                  <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+                ) : (
                   <Image
                     src={car?.photos[2]?.image_url as string}
                     alt={car?.photos[2]?.image_url as string}
@@ -146,7 +162,9 @@ export default function Details() {
                 )}
               </span>
               <span className="relative h-20 lg:h-30 w-full border border-gray-200">
-                {car ? (
+                {loading ? (
+                  <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+                ) : (
                   <Image
                     src={car?.photos[3]?.image_url as string}
                     alt={car?.photos[3]?.image_url as string}
@@ -160,7 +178,9 @@ export default function Details() {
                 )}
               </span>
               <span className="relative h-20 lg:h-30 w-full border border-gray-200">
-                {car ? (
+                {loading ? (
+                  <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+                ) : (
                   <Image
                     src={car?.photos[4]?.image_url as string}
                     alt={car?.photos[4]?.image_url as string}
@@ -179,8 +199,8 @@ export default function Details() {
             <span>
               <ul className="px-3">
                 <li className="list-disc py-1">
-                  Superbe {car?.brand} {car?.model} {car?.year} en excellent
-                  etat.
+                      {loading ? "Chargement..." : `Superbe ${car?.brand} ${car?.model} ${car?.year} en excellent
+                      etat.`}
                 </li>
                 <li className="list-disc py-1">Moteur 2.0L 184 ch</li>
                 <li className="list-disc py-1">Interieure cuir sport</li>
@@ -199,19 +219,19 @@ export default function Details() {
           <Accordion title="Details du vehicule">
             <span className="border-b border-gray-300 flex justify-between items-center p-1">
               <p className="text-start">Annee:</p>
-              <p className="text-end font-bold">2020</p>
+              <p className="text-end font-bold">{loading ? "Chargement..." : car?.year}</p>
             </span>
             <span className="border-b border-gray-300 flex justify-between items-center p-1">
               <p className="text-start">Kilometrage:</p>
-              <p className="text-end font-bold">{car?.mileage}</p>
+              <p className="text-end font-bold">{loading ? "Chargement..." : car?.mileage}</p>
             </span>
             <span className="border-b border-gray-300 flex justify-between items-center p-1">
               <p className="text-start">Carburant:</p>
-              <p className="text-end font-bold">{car?.fuel}</p>
+              <p className="text-end font-bold">{loading ? "Chargement..." : car?.fuel}</p>
             </span>
             <span className="border-b border-gray-300 flex justify-between items-center p-1">
               <p className="text-start">Transmission:</p>
-              <p className="text-end font-bold">{car?.transmission}</p>
+              <p className="text-end font-bold">{loading ? "Chargement..." : car?.transmission}</p>
             </span>
             <span className="border-b border-gray-300 flex justify-between items-center p-1">
               <p className="text-start">Puissance:</p>
@@ -225,19 +245,22 @@ export default function Details() {
           <Accordion title="Prix et Contact">
             <span className="flex flex-col">
               <h1 className="w-full text-2xl text-center py-2 font-black text-emerald-800">
-                {car?.price?.toLocaleString()} Fcfa
+                {loading ? "Chargement..." : car?.price?.toLocaleString()} Fcfa
               </h1>
-              <ButtonContact id={car ? car?._id : ""} sellerPhone={seller?.phone || "698902641"} />
+              <ButtonContact
+                id={car ? car?._id : ""}
+                sellerPhone={seller?.phone || "698902641"}
+              />
             </span>
             <span className="flex flex-col">
               <span className=" flex gap-2 items-center justify-start py-2">
-                <User /> {seller ? seller?.name : "Jean Dupont"}
+                <User /> {loading ? "Chargement..." : seller?.name}
               </span>
               <span className=" flex gap-2 items-center justify-start py-2">
-                <Phone /> Tel: {seller ? seller?.phone : "6 12 34 56 78"}
+                <Phone /> Tel: {loading ? "Chargement..." : seller?.phone}
               </span>
               <span className=" flex gap-2 items-center justify-start py-2">
-                <Mail /> {seller ? seller?.email : "jean.dupont@email.com"}
+                <Mail /> {loading ? "Chargement..." : seller?.email}
               </span>
             </span>
           </Accordion>

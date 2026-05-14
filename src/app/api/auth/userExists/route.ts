@@ -12,7 +12,9 @@ export async function POST(req: Request) {
     const user = await userModel.findOne({ email }).select("_id");
     console.log("User :", user);
 
-    return NextResponse.json({ user }, { status: 201 });
+    if(user !== null) return NextResponse.json({ user }, { status: 201 });
+
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
   } catch (error) {
     console.log(
       "Erreur de verification de l'existence de l'utilisateur :",

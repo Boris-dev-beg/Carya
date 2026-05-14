@@ -38,15 +38,16 @@ export const authOptions: NextAuthOptions = {
           await Mongoose_connection();
           const user = await userModel.findOne({ email });
 
-          if (!user) return null;
+          if (!user) return null; // ? Utilisateur non trouve
 
           const passwordsMatch = await bcrypt.compare(password, user?.password);
 
-          if (!passwordsMatch) return null;
+          if (!passwordsMatch) return null; // ? Mot de passe incorrect
 
-          return user;
+          return user; // ? Retourne l'utilisateur pour la session
         } catch (error) {
           console.log("Error: ", error);
+          return null; // ? En cas d'erreur, retourne null
         }
       },
     }),

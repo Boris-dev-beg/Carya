@@ -12,7 +12,7 @@ export default function Loginpage() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const route = useRouter();
+  const router = useRouter(); // ? Pour la redirection apres connexion
   const { data: session } = useSession();
   if (session) {
     console.log(session?.user);
@@ -38,18 +38,19 @@ export default function Loginpage() {
       if (res?.error) {
         setError("Invalid credentials");
         console.log("Erreur:", res.error)
-      }else  {
+      } else if (res?.ok) {
         alert("Login successful");
-        route.push("/v1/Accueil");
+        router.push("/v1/Accueil");
       }
 
     } catch (error) {
       console.log("Erreur rencontrée :", error);
+      setError("An error occurred during login. Please try again.");
+    } finally {
+      setEmail("");
+      setPassword("");
     }
 
-    setEmail("");
-    setPassword("");
-    setError("");
   };
 
   // ! Affichages / Rendus

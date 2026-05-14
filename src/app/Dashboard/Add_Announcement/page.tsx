@@ -52,14 +52,15 @@ export default function Add_Announcement() {
     // ? verification de la validite des valeurs du formulaire
     const TabVal = Object.values(formData);
     const isNull = TabVal.some(
-      (v) => (v as string) === "" || (v as number) <= 0,
-    );
+      (v) => (v as string).trim() === "" || (v as number) <= 0, 
+    ); // ? Verification de l'existence de valeurs null ou vides ou inferieures ou egales a 0 dans les valeurs du formulaire
 
-    if (!isNull) {
+    if (isNull) {
       // ? Si les valeurs sont null envoyer un message d'erreur
       setError("Veuillez remplire correctement les champs ! ");
       return;
     }
+    
     setError("");
     const data = await GetUser(PrevEmail); // ? Recuperation des information sur l'utilisateur
     const ownerId = data?.user?._id; // ? Recuperation de son ID

@@ -225,10 +225,14 @@ export default function Profil_Seller() {
             <h1 className="font-bold text-xl">Mes Annonces Actuelle</h1>
             <p>Vos vehicules en vente sur CARYA.</p>
           </div>
-          <div className="grid grid-cols-1 w-full gap-3 py-2">
-            {tabCars.map((car, index) => (
-              <Car key={index} car={car} />
-            ))}
+          <div className="flex-1 grid grid-cols-1 w-full gap-3 py-2">
+            {tabCars !== undefined && tabCars !== null && tabCars.length > 0 ? (
+              tabCars.map((car, index) => (
+                <Car key={index} car={car} />
+              ))
+            ) : (
+              <p className="text-gray-500">Aucune annonce disponible.</p>
+            )}
           </div>
         </div>
       </main>

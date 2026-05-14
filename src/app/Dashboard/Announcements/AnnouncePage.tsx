@@ -58,12 +58,16 @@ export default function AnnounceSection() {
     if (!email) return;
     const fetchCars = async () => {
       setLoading(true);
+
       const ownerId = await GetUser(email as string);
       const id = ownerId?.user?._id;
+
       console.log("Owner ID dans le useEffect:", id);
       console.log("Email dans le useEffect", email);
+
       const cars = await GetCars(id as string);
       setCars(cars);
+
       setLoading(false);
     };
     fetchCars();
@@ -77,7 +81,7 @@ export default function AnnounceSection() {
   }
   return (
     <div className="grid grid-cols-1 place-items-center gap-5 px-3 py-1 md:px-30 w-full">
-      {cars ? (
+      {cars !== undefined || cars !== null ? (
         cars?.map((car, index) => (
           <CardAnnouncement
             key={index}

@@ -20,7 +20,7 @@ export default function Chat() {
           </span>
         </div>
       </header>
-      <main className="flex flex-col border-b border-gray-400 px-2 py-1 md:w-2/3">
+      <main className="flex-1 flex flex-col border-b border-gray-400 px-2 py-1 md:w-2/3">
         {/* List Items */}
         {TabChatList.map((item, i) => (
           <Item

@@ -5,7 +5,7 @@ import { ObjectId } from "mongoose";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/src/components/load/loading";
-import {getUser} from "@/src/lib/GetUser.ts";
+import {GetUser} from "@/src/lib/GetUser";
 
 // ? Recuperation des plans
 const fecthPlans = async () => {
@@ -74,7 +74,7 @@ export default function Subscription() {
   }, []);
   useEffect(() => {
     const testPlan = async () => {
-      const data = await getUser(email as string); // ? Recuperation de l'utilisateur connecté;
+      const data = await GetUser(email as string); // ? Recuperation de l'utilisateur connecté;
       const userId = data?.user?._id;
       
       if (!Plans || Plans.length === 0) return;

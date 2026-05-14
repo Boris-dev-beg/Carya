@@ -6,16 +6,18 @@ import { GetUser } from "@/src/lib/GetUser";
 import Loading from "@/src/components/load/loading";
 
 type Car = {
-  brand: string,
-  model: string,
-  year:number,
-  price: number,
-  photos: [{
-    image_url: string
-  }],
-  _id: string
-}
-// ? Recuperation de la voiture
+  brand: string;
+  model: string;
+  year: number;
+  price: number;
+  photos: [
+    {
+      image_url: string;
+    },
+  ];
+  _id: string;
+};
+// ? Recuperation des voitures d'un vendeur
 const GetCars = async (ownerId: string) => {
   if (!ownerId) {
     console.log("Owner ID est Undefine");
@@ -27,7 +29,7 @@ const GetCars = async (ownerId: string) => {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ ownerId }),
-    });
+    }); // ? Envoie de l'id du vendeur pour recuperer ses voitures
 
     if (!response.ok)
       throw new Error(
@@ -35,7 +37,7 @@ const GetCars = async (ownerId: string) => {
       );
 
     const cars = await response.json();
-    console.log("Cars dans la function GetCars",cars)
+    console.log("Cars dans la function GetCars", cars);
     return cars;
   } catch (err) {
     console.log("Impossible de recuperer les voitures:", err);
@@ -46,23 +48,23 @@ const GetCars = async (ownerId: string) => {
 export default function AnnounceSection() {
   // ! States / Etats
   const [cars, setCars] = useState<Car[]>();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const { data } = useSession();
   const email = data?.user?.email;
   console.log("Email hors du useEffect", email);
 
   // ! Comportements / Fonctions
   useEffect(() => {
-  if (!email) return;
+    if (!email) return;
     const fetchCars = async () => {
-      setLoading(true)
+      setLoading(true);
       const ownerId = await GetUser(email as string);
-      const id = ownerId?.user?._id
-      console.log("Owner ID dans le useEffect:",id)
+      const id = ownerId?.user?._id;
+      console.log("Owner ID dans le useEffect:", id);
       console.log("Email dans le useEffect", email);
       const cars = await GetCars(id as string);
       setCars(cars);
-      setLoading(false)
+      setLoading(false);
     };
     fetchCars();
   }, [email]);
@@ -70,23 +72,29 @@ export default function AnnounceSection() {
   console.log("Cars finded:", cars);
 
   // ! Affichage / Rendus
-  if(loading) {
-  return <Loading />
-}
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="grid grid-cols-1 place-items-center gap-5 px-3 py-1 md:px-30 w-full">
-      {cars?.map((car, index) => (
-        <CardAnnouncement
-          key={index}
-          id={car?._id}
-          src_image={car.photos[0].image_url}
-          price={car.price}
-          name={car.brand + " " + car.model + " " + car.year}
-          status="En attente"
-          views={0}
-          msg={0}
-        />
-      ))}
+      {cars ? (
+        cars?.map((car, index) => (
+          <CardAnnouncement
+            key={index}
+            id={car?._id}
+            src_image={car.photos[0].image_url}
+            price={car.price}
+            name={car.brand + " " + car.model + " " + car.year}
+            status="En attente"
+            views={0}
+            msg={0}
+          />
+        ))
+      ) : (
+        <h1 className="text-2xl font-sans text-gray-500">
+          Aucune annonce pour le moment
+        </h1>
+      )}
     </div>
   );
 }

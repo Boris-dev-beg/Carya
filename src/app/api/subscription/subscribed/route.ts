@@ -4,7 +4,8 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-export async function POST(req: Request) {
+// ! Creation d'un plan avec l'id du vendeur
+export async function POST(req: Request) { 
   const { planId, userId, duration } = await req.json();
   const status = "active";
   const startDate = new Date();
@@ -40,7 +41,7 @@ export async function GET() {
   try {
     await Mongoose_connection();
 
-    const Plan = await subscriptionModel.findOne({},"planId");
+    const Plan = await subscriptionModel.findOne({},"planId"); // ? Recuperation du plan de l'utilisateur connecté (a adapter pour recuperer le plan de l'utilisateur connecté) 
     return NextResponse.json(
       {
         Plan,

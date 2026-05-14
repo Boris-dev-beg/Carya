@@ -1,7 +1,10 @@
+"use client";
+
 import { Plus } from "lucide-react";
 import React, { Suspense } from "react";
 import Loading from "@/src/components/load/loading";
 import AnnounceSection from "./AnnouncePage";
+import Link from "next/link";
 
 export default function AnnouncementPage() {
   return (
@@ -16,9 +19,12 @@ export default function AnnouncementPage() {
         </Suspense>
       </main>
       <footer className="w-full flex items-center justify-center py-4">
-        <button className="text-white text-center font-bold py-2 px-10 rounded-md bg-emerald-800 hover:bg-emerald-700 flex items-center justify-center">
+        <Link
+          href="/Dashboard/Add_Announcement"
+          className="text-white text-center font-bold py-2 px-10 rounded-md bg-emerald-800 hover:bg-emerald-700 flex items-center justify-center"
+        >
           <Plus /> Ajouter une Annonce
-        </button>
+        </Link>
       </footer>
     </section>
   );

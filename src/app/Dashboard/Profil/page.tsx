@@ -62,6 +62,36 @@ const getCars = async (ownerId: string) => {
     return;
   }
 };
+// ? Fonction pour formater une date en format "Mois Année" ou Aujourd'hui si la date correspond à la date actuelle
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString); // ? Ex: 2021-08-15T12:00:00Z
+
+  // ? Date actuelle
+  const now = new Date(); // ? Ex: 2024-08-15T12:00:00Z
+
+  // ? Vérifier si c'est le même jour
+  const isToday =
+    date.getDate() === now.getDate() && // ? Si le jour correspond
+    date.getMonth() === now.getMonth() && // ? Si le mois correspondent
+    date.getFullYear() === now.getFullYear(); // ? Si la date correspond à aujourd'hui
+
+  let message; // ? Message à afficher
+  if (isToday) {
+    message = "Membre depuis aujourd'hui"; // ? Si c'est aujourd'hui, afficher "Membre depuis aujourd'hui"
+  } else {
+    // ? Formatter mois et année
+    const options: Intl.DateTimeFormatOptions = {
+      month: "long",
+      year: "numeric",
+    }; // ? Ex: { month: "long", year: "numeric" } => "Aout 2021"
+
+    const formatted = date.toLocaleDateString("fr-FR", options); // ? Ex: "Aout 2021"
+    message = `Membre depuis ${formatted}`; // ? Ex: "Membre depuis Aout 2021"
+  }
+
+  return message; // ? Retourne le message formaté
+};
+
 
 // ? Tableau de voitures par defaut
 const TabCars: Car[] = [
@@ -117,6 +147,7 @@ export default function Profil_Seller() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [joinDate, setJoinDate] = useState("");
   const { data } = useSession();
   const PrevEmail = data?.user?.email as string;
   const [tabCars, setTabCars] = useState<Car[]>(TabCars);
@@ -130,7 +161,7 @@ export default function Profil_Seller() {
         setName(seller.user.name);
         setEmail(seller.user.email);
         setPhone(seller.user.phone);
-
+        setJoinDate(formatDate(seller.user.createdAt as string));
         const Cars = await getCars(seller?.user?._id);
         setTabCars([...Cars]);
       }
@@ -172,13 +203,16 @@ export default function Profil_Seller() {
                   <Mail /> {email}
                 </p>
                 <p className="flex items-center justify-start gap-2">
-                  <Phone /> {phone}
+                  <Phone /> {phone ? phone.replace(
+                    /(\d{3})(?=\d{3})/g,
+                    "$1 ",
+                  ) : null} // ? Formater le numéro de téléphone en ajoutant des espaces tous les 3 chiffres
                 </p>
                 <p className="flex items-center justify-start gap-2">
-                  <MapPin /> Lyon, France
+                  <MapPin /> Bafoussam, Cameroun
                 </p>
                 <p className="flex items-center justify-start gap-2">
-                  <CalendarDays /> Membre depuis Janv. 2019
+                  <CalendarDays /> {joinDate}
                 </p>
               </span>
             </span>

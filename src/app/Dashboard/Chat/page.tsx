@@ -40,6 +40,66 @@ export default function Chat() {
   );
 }
 
+// const TabChatList = [
+//   {
+//     id: "/Dashboard/Chat/1",
+//     image: "man_1.jpg",
+//     vendeur: "Jean Dupont",
+//     voiture: "BMW Serie 3 2020",
+//     message: "Oui, samedi a 14h, cela me convient parfaitement",
+//     heure: "il y a 5 min",
+//     non_lue: 1,
+//   },
+//   {
+//     id: "/Dashboard/Chat/2",
+//     image: "women_1.jpg",
+//     vendeur: "Sophie Martin",
+//     voiture: "Renault Clio 2018",
+//     message: "D'accord, a demain pour l'essai !",
+//     heure: "Hier",
+//   },
+//   {
+//     id: "/Dashboard/Chat/3",
+//     image: "man_6.jpg",
+//     vendeur: "Marc Leroy",
+//     voiture: "Audi Q5 2017",
+//     message: "Bonjour, avez-vous recu mon message ?",
+//     heure: "Lundi",
+//     non_lue: 2,
+//   },
+//   {
+//     id: "/Dashboard/Chat/4",
+//     image: "women_2.jpg",
+//     vendeur: "Nathalie Durand",
+//     voiture: "Penguet 208 2019",
+//     message: "vous: La voiture est-elle toujours disponible ?",
+//     heure: "20 avr.",
+//   },
+//   {
+//     id: "/Dashboard/Chat/5",
+//     image: "man_5.jpg",
+//     vendeur: "Patrick Dubois",
+//     voiture: "Ford Focus 2016",
+//     message: "vous: Merci pour les infos, a bientot.",
+//     heure: "18 avr.",
+//   },
+//   {
+//     id: "/Dashboard/Chat/6",
+//     image: "cartoon_woman_1.jpg",
+//     vendeur: "Nathalie Durand",
+//     voiture: "Penguet 208 2019",
+//     message: "vous: La voiture est-elle toujours disponible ?",
+//     heure: "20 avr.",
+//   },
+//   {
+//     id: "/Dashboard/Chat/7",
+//     image: "man_4.jpg",
+//     vendeur: "Patrick Dubois",
+//     voiture: "Ford Focus 2016",
+//     message: "vous: Merci pour les infos, a bientot.",
+//     heure: "18 avr.",
+//   },
+// ];
 const TabChatList = [
   {
     id: "/Dashboard/Chat/1",
@@ -50,53 +110,4 @@ const TabChatList = [
     heure: "il y a 5 min",
     non_lue: 1,
   },
-  {
-    id: "/Dashboard/Chat/2",
-    image: "women_1.jpg",
-    vendeur: "Sophie Martin",
-    voiture: "Renault Clio 2018",
-    message: "D'accord, a demain pour l'essai !",
-    heure: "Hier",
-  },
-  {
-    id: "/Dashboard/Chat/3",
-    image: "man_6.jpg",
-    vendeur: "Marc Leroy",
-    voiture: "Audi Q5 2017",
-    message: "Bonjour, avez-vous recu mon message ?",
-    heure: "Lundi",
-    non_lue: 2,
-  },
-  {
-    id: "/Dashboard/Chat/4",
-    image: "women_2.jpg",
-    vendeur: "Nathalie Durand",
-    voiture: "Penguet 208 2019",
-    message: "vous: La voiture est-elle toujours disponible ?",
-    heure: "20 avr.",
-  },
-  {
-    id: "/Dashboard/Chat/5",
-    image: "man_5.jpg",
-    vendeur: "Patrick Dubois",
-    voiture: "Ford Focus 2016",
-    message: "vous: Merci pour les infos, a bientot.",
-    heure: "18 avr.",
-  },
-  {
-    id: "/Dashboard/Chat/6",
-    image: "cartoon_woman_1.jpg",
-    vendeur: "Nathalie Durand",
-    voiture: "Penguet 208 2019",
-    message: "vous: La voiture est-elle toujours disponible ?",
-    heure: "20 avr.",
-  },
-  {
-    id: "/Dashboard/Chat/7",
-    image: "man_4.jpg",
-    vendeur: "Patrick Dubois",
-    voiture: "Ford Focus 2016",
-    message: "vous: Merci pour les infos, a bientot.",
-    heure: "18 avr.",
-  },
-];
+]; // ? pour les tests, a supprimer ou remplacer par une requete vers l'api pour recuperer les conversations de l'utilisateur

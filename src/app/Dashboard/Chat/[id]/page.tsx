@@ -6,27 +6,35 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
+// const TabMessages = [
+//   {
+//     contenu: "Bonjour Jean \n La voiture est-elle toujours disponible ?",
+//     date: "14:18",
+//     role: "buyer",
+//   },
+//   {
+//     contenu:
+//       "Bonjour, \n Elle est toujours disponible. \n Voulez-vous venir la voir pour un essai ?",
+//     date: "14:22",
+//     role: "seller",
+//   },
+//   {
+//     contenu: "Oui, samedi a 14h, cela me convient parfaitement !",
+//     date: "14:25",
+//     role: "buyer",
+//   },
+//   {
+//     contenu: "Ok, a samedi!",
+//     date: "14:26",
+//     role: "seller",
+//   },
+// ];
+
 const TabMessages = [
   {
-    contenu: "Bonjour Jean \n La voiture est-elle toujours disponible ?",
-    date: "14:18",
+    contenu: "",
+    date: "",
     role: "buyer",
-  },
-  {
-    contenu:
-      "Bonjour, \n Elle est toujours disponible. \n Voulez-vous venir la voir pour un essai ?",
-    date: "14:22",
-    role: "seller",
-  },
-  {
-    contenu: "Oui, samedi a 14h, cela me convient parfaitement !",
-    date: "14:25",
-    role: "buyer",
-  },
-  {
-    contenu: "Ok, a samedi!",
-    date: "14:26",
-    role: "seller",
   },
 ];
 

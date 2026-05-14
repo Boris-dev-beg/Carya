@@ -55,7 +55,8 @@ export default function Add_Announcement() {
       (v) => (v as string) === "" || (v as number) <= 0,
     );
 
-    if (!isNull) { // ? Si les valeurs sont null envoyer un message d'erreur
+    if (!isNull) {
+      // ? Si les valeurs sont null envoyer un message d'erreur
       setError("Veuillez remplire correctement les champs ! ");
       return;
     }
@@ -101,7 +102,7 @@ export default function Add_Announcement() {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >,
+    >, 
   ) => {
     const { value, name } = e.target;
     setFormData((prev) => ({
@@ -117,6 +118,8 @@ export default function Add_Announcement() {
       router.push("/Dashboard");
     }, 100);
   };
+
+  // ! Affichage / Render
   if (loading) {
     return <Loading />;
   }
@@ -173,17 +176,17 @@ export default function Add_Announcement() {
             </select>
           </span>
           <span className="w-full flex items-center gap-2 py-2">
-            <h1 className="py-2">Kilometrage : </h1>
+            <h1 className="py-2 w-full md:w-1/4">Kilometrage : </h1>
             <input
               type="text"
               name="mileage"
-              value={formData.mileage}
+              value={formData.mileage.replace(/\D/g, "")} // ? Supprimer les caractères non numériques
               onChange={handleChange}
               placeholder="Indiquer les Km"
               className="border border-gray-400 rounded-md p-2 md:w-2/3 w-full"
             />
           </span>
-          <span className="w-full flex items-center md:justify-start gap-2">
+          <span className="w-full flex items-center justify-start gap-2">
             <span className="w-full md:w-fit flex items-center gap-1">
               <p className="bg-emerald-800 rounded-full size-3"></p>
               <h1>Carburant : </h1>
@@ -243,7 +246,7 @@ export default function Add_Announcement() {
               </label>
             </span>
           </span>
-          <span className="w-full flex md:justify-start items-center gap-2">
+          <span className="w-full flex justify-start items-center gap-2">
             <span className="w-full md:w-fit flex items-center gap-1">
               <p className="bg-emerald-800 rounded-full size-3"></p>
               <h1>Transmission : </h1>
@@ -313,7 +316,7 @@ export default function Add_Announcement() {
           </>
         </Step>
         <Step number={3} title="Details et Prix">
-          <span className="w-full p-2 border border-gray-400 rounded-md flex flex-col items-center justify-center md:justify-start md:items-start gap-2">
+          <span className="w-full p-2 border border-gray-400 rounded-md flex flex-col items-center justify-start md:items-start gap-2">
             <h1>Description: </h1>
             <textarea
               name="description"
@@ -330,7 +333,7 @@ export default function Add_Announcement() {
             </button>
             <input
               name="price"
-              value={formData.price}
+              value={formData.price.replace(/\D/g, "")} // ? Supprimer les caractères non numériques
               onChange={handleChange}
               type="text"
               className="outline-none border border-gray-400 px-2 py-1 rounded-md rounded-l-none border-l-0"

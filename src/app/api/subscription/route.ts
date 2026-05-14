@@ -15,17 +15,22 @@ export async function POST(req: Request) {
 
   try {
     await Mongoose_connection(); // ? Connection a mongoDB
-     // ? Création du plan
-    const plan = await SubscriptionPlan.create({ name, price, duration, benefits });
+    // ? Création du plan
+    const plan = await SubscriptionPlan.create({
+      name,
+      price,
+      duration,
+      benefits,
+    });
 
     return NextResponse.json(
       { message: "Plan de souscription créé avec succès", plan }, // ? Message de success
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     return NextResponse.json(
       { erreur: error }, // ? Message d'erreur
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -45,7 +50,6 @@ export async function GET() {
       { status: 200 },
     );
   } catch (error) {
-    
     return NextResponse.json(
       {
         error: error, // ? Envoie d'un message d'erreur

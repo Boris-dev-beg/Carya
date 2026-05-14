@@ -15,19 +15,19 @@ interface PlansProps {
 
 const getUser = async (email: string) => {
   try {
-    const response = await fetch("http://localhost:3000/api/getUser", {
+    const response = await fetch("/api/getUser", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ email }),
     });
 
     if (!response.ok)
-      throw new Error("Impossible de selectionner l'utilisateur");
+      return;
 
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log("An error occured:", error);
+    console.log("An error occured while fetching the user:", error);
     return;
   }
 };
@@ -53,7 +53,7 @@ export function SubscriptionPlans({
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/subscription/subscribed",
+        "/api/subscription/subscribed",
         {
           method: "POST",
           headers: { "Content-type": "application/json" },

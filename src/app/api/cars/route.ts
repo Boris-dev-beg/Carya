@@ -12,6 +12,9 @@ type Photo = {
   image_url: string;
   public_id: string;
 };
+
+export const runtime = "nodejs";
+
 // ! Creation d'une voiture
 export async function POST(request: Request) {
   const formData = await request.formData();

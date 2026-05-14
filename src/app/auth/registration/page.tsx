@@ -1,6 +1,7 @@
 "use client";
 import { Role } from "@/src/components/ButtonRole";
 import { InputForm } from "@/src/components/InputForm";
+import Loading from "@/src/components/load/loading";
 import {
   BriefcaseBusiness,
   IdCardLanyard,
@@ -15,6 +16,7 @@ import { useState } from "react";
 
 export default function RegisterPage() {
   // ! Etats
+  const [loading, setLoading] = useState<boolean>(false)
   const [role, setRole] = useState("buyer");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,6 +28,7 @@ export default function RegisterPage() {
   // ! Comportements
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
+    setLoading(true)
 
     if ( // ? Verification de la validitee des champs
       name.trim() === "" ||
@@ -51,6 +54,7 @@ export default function RegisterPage() {
       if (response_UserExist.ok) { // ? S'il existe, il est renvoyer vers la pge de login
         alert("User Already Exist");
         route.push("/auth/login");
+        return
       }
 
       // ? Reponse de creation de l'utilisateur s'il n'existe pas
@@ -64,7 +68,7 @@ export default function RegisterPage() {
       );
 
       if (!response_CreateUser.ok) { // ? Si la creation n'a pas reussi
-        alert("An error has occurred");
+        alert("An error occurred");
         return;
       }
       console.log(response_CreateUser);
@@ -74,6 +78,7 @@ export default function RegisterPage() {
     }
 
     // ? Reset de tout les champs;
+    setLoading(false)
     setError("");
     setRole("buyer");
     setEmail("");
@@ -83,6 +88,7 @@ export default function RegisterPage() {
   };
 
   // ! Return / Rendu
+  if(loading){ return <Loading />}
   return (
     <form
       onSubmit={handleSubmit}

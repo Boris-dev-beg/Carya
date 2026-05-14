@@ -6,6 +6,8 @@ import Mongoose_connection from "@/src/lib/mongoDB";
 import { SubscriptionPlan } from "@/src/models/Subscription";
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 // ! Enregistrement d'un plan par l'admin
 export async function POST(req: Request) {
   // ? Recuperation des donnees depuis le front-end

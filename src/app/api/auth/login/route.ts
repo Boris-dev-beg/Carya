@@ -3,6 +3,8 @@ import { userModel } from "@/src/models/User";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 export async function POST(req: Request) {
   const { email, password } = await req.json();
   console.log("Body reçu:", email, password);

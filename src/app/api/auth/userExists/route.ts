@@ -2,6 +2,8 @@ import Mongoose_connection from "@/src/lib/mongoDB";
 import { userModel } from "@/src/models/User";
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 export async function POST(req: Request) {
   try {
     await Mongoose_connection();

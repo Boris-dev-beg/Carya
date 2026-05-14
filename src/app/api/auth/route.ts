@@ -5,6 +5,8 @@ import Mongoose_connection from "@/src/lib/mongoDB";
 import { userModel } from "@/src/models/User";
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 // ! Creation d'un utilisateur
 export async function POST(req: Request) {
   const { name, email, phone, password, role } = await req.json();

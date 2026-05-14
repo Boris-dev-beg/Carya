@@ -7,12 +7,14 @@ import { userModel } from "@/src/models/User";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 // ! Fonction de creation
 export async function POST(req: Request) {
   const { name, email, phone, password, role } = await req.json();
-  
+
   try {
-    const hashedPassword = await bcrypt.hash(password, 10)
+    const hashedPassword = await bcrypt.hash(password, 10);
     await Mongoose_connection();
     await userModel.create({
       name,
@@ -22,19 +24,19 @@ export async function POST(req: Request) {
       role,
     });
     return NextResponse.json(
-    {
-      message: "The new user has been created successfully",
-    },
-    { status: 201 },
-  );
+      {
+        message: "The new user has been created successfully",
+      },
+      { status: 201 },
+    );
   } catch (error) {
     console.log("Erreur de creation de l'utilisateur :", error);
     return NextResponse.json(
-    {
-      "Error": error,
-    },
-    { status: 500 },
-  );
+      {
+        Error: error,
+      },
+      { status: 500 },
+    );
   }
 }
 

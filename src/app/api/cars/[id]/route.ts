@@ -2,6 +2,8 @@ import Mongoose_connection from "@/src/lib/mongoDB";
 import { carModel } from "@/src/models/Car";
 import { NextResponse, NextRequest } from "next/server";
 
+export const runtime = "nodejs";
+
 // ! Modification d'une voiture
 export async function PUT(
   request: NextRequest,

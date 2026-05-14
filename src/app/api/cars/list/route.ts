@@ -3,6 +3,8 @@ import { carModel } from "@/src/models/Car";
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 
+export const runtime = "nodejs";
+
 // ! Recuperation des voitures de l'utilisateur
 export async function POST(req: NextRequest) {
   const { ownerId } = await req.json();

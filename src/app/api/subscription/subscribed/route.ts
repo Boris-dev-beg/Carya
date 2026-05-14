@@ -2,6 +2,8 @@ import Mongoose_connection from "@/src/lib/mongoDB";
 import { subscriptionModel } from "@/src/models/Subscription";
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 export async function POST(req: Request) {
   const { planId, userId, duration } = await req.json();
   const status = "active";

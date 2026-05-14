@@ -50,9 +50,10 @@ export default function RegisterPage() {
       });
 
       if (response_UserExist.ok) {
+        const { user } = await response_UserExist.json();
         // ? S'il existe, il est renvoyer vers la pge de login
         alert("User Already Exist");
-        console.log("User already exist:", await response_UserExist.json());
+        console.log("User already exist:", user);
         route.push("/auth/login");
         return;
       }

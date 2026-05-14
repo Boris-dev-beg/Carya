@@ -6,6 +6,7 @@ export const runtime = "nodejs";
 
 // ! Recuperation du plan selectionner de l'utilisateur connecté a partir de son id
 export async function GET(req: NextRequest, {params}: { params: { id: string } }) {
+    
   const UserId = params.id; // ? Recuperation de l'id de l'utilisateur a partir des params de la requete
 
   try {

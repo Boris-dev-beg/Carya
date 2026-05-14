@@ -13,7 +13,7 @@ export default function LogOutButton() {
     
         <button
           onClick={handleClick}
-          className="hover:bg-red-500 bg-red-400 text-white w-full p-4 rounded-2xl shadow-md flex gap-5 items-center justify-center"
+          className="hover:bg-red-500 bg-red-400 text-white w-fit p-4 rounded-2xl shadow-md flex gap-5 items-center justify-center"
         >
           <LogOut size={20} /> Log Out
         </button>

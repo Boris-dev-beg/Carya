@@ -40,11 +40,11 @@ const getCar = async (id: string) => {
     const car = await res.json();
 
     console.log("Car Data:", car);
-    return car;
+    return {car};
   } catch (err) {
 
     console.log("Error Finded:", err);
-    return;
+    return {car: null};
   }
 };
 // ? Recuperation des Infos du vendeur a partir de son ID
@@ -75,7 +75,7 @@ export default function Details() {
     const fecthCar = async () => {
       const {car} = await getCar(id as string); // ? Recuperation des infos de la voiture a partir de son ID
       
-      if (car) {
+      if (car !== null) {
         const ownerId = car?.ownerId as string;
         const user = await getInfoSeller(ownerId); // ? Recuperation des infos du vendeur a partir de son ID
         setCar(car); // ? On set la voiture dans le state pour pouvoir l'afficher dans le composant

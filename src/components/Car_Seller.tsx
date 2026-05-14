@@ -15,6 +15,7 @@ type Car = {
 };
 
 export function Car({ car }: { car: Car }) {
+  if(!car) return null;
   return (
     <div className="flex items-center justify-center shadow-md shadow-gray-300 w-full md:h-40">
       <span className="relative w-1/3 h-full rounded-l-md">

@@ -91,7 +91,7 @@ export default function Profil_Buyer() {
                   <Mail /> {data?.user?.email}
                 </p>
                 <p className="flex items-center justify-start gap-2">
-                  <Phone /> {phone}
+                  <Phone /> {phone?.replace(/(\d{3})(?=\d{3})/g, "$1 ")} // ? Formater le numéro de téléphone en ajoutant des espaces tous les 3 chiffres
                 </p>
                 <p className="flex items-center justify-start gap-2">
                   <MapPin /> {location}

@@ -21,6 +21,7 @@ export const CardAnnouncement = ({
   msg,
   id,
 }: Car) => {
+  if(!src_image || !name ) return null;
   return (
     <div className="flex flex-col md:flex-row shadow-md shadow-gray-400 rounded-md w-full bg-white">
       {/* Details */}

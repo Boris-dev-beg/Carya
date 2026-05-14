@@ -108,6 +108,7 @@ export default function Accueil() {
     Cars[]
   >(Tabcars);
   const [searchValue, setSearchValue] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   // ! Comportements / Fonctions
   // ? Filtrage du tableau de voiture
@@ -136,6 +137,7 @@ export default function Accueil() {
     const fetchCars = async () => {
       const cars: Cars[] = await getCars();
       setCars((prev) => [...prev, ...cars]);
+      setIsLoading(false);
       console.log("Cars: ", cars);
     };
     fetchCars();
@@ -150,9 +152,13 @@ export default function Accueil() {
         <h1 className="text-4xl font-bold pl-2 lg:pl-4 text-emerald-700">
           Meilleurs Annonces
         </h1>
-        <Suspense fallback={<Loading />}>
-          <Best Cars={newCarList} />
-        </Suspense>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Suspense fallback={<Loading />}>
+            <Best Cars={newCarList} />
+          </Suspense>
+        )}
       </div>
       <div className="w-full relative border-t-2 border-emerald-700 flex flex-col my-7 pt-20 items-center justify-center">
         <h1 className="font-bold absolute -top-3 bg-gray-200 text-emerald-700 text-2xl lg:text-3xl px-3">
@@ -191,6 +197,7 @@ function HERO({
           src={"/banner.png"}
           alt="Banner Image"
           fill
+          loading="eager" // ? Charger l'image immédiatement
           sizes="(max-width: 768px) 100vw"
           className="lg:w-full lg:h-full"
         />

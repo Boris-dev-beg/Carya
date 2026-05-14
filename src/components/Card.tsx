@@ -19,8 +19,10 @@ interface Cars {
   fuel: string;
 }
 export default function Card({ car }: {car: Cars}) {
-  if (!car) return
-  console.log("Car: ...", car);
+  
+  if (!car?.photos?.[0]?.image_url) return null; // ? Si l'URL de l'image n'est pas valide, on ne rend pas le composant
+
+  console.log("Car in Card Component: ...", car);
   return (
     <div className="flex w-120 lg:w-130 h-50 p-1 gap-1 bg-white rounded-md shadow-md shadow-gray-100">
       <div className="flex flex-col items-center w-1/2 h-full">

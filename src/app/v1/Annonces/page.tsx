@@ -115,9 +115,11 @@ export default function Annonces() {
   useEffect(() => {
     const fetchCars = async () => {
       setLoading(true); // ? On set l'etat de chargement a true avant de recuperer les infos des voitures
+
       const cars = await getCars();
       setCars((prev) => [...prev, ...cars]);
       console.log("Cars: ", cars);
+      
       setLoading(false); // ? On set l'etat de chargement a false une fois les infos recuperées
     };
     fetchCars();

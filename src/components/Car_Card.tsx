@@ -17,6 +17,7 @@ interface Cars {
 }
 
 export function CarCard({ car }: { car: Cars }) {
+  if(!car) return null; // ? Si la voiture n'est pas définie, on ne rend rien
   return (
     <div className="rounded-md flex flex-row lg:flex-col items-center justify-center h-40 lg:h-90 w-full shadow-xs shadow-gray-700 overflow-hidden bg-white">
       <span className="relative w-3/5 lg:w-full h-full">

@@ -21,27 +21,34 @@ type Car = {
   }[];
 };
 
+// const TabMessages = [
+//   {
+//     contenu: "Bonjour Jean \n La voiture est-elle toujours disponible ?",
+//     date: "14:18",
+//     role: "buyer",
+//   },
+//   {
+//     contenu:
+//       "Bonjour, \n Elle est toujours disponible. \n Voulez-vous venir la voir pour un essai ?",
+//     date: "14:22",
+//     role: "seller",
+//   },
+//   {
+//     contenu: "Oui, samedi a 14h, cela me convient parfaitement !",
+//     date: "14:25",
+//     role: "buyer",
+//   },
+//   {
+//     contenu: "Ok, a samedi!",
+//     date: "14:26",
+//     role: "seller",
+//   },
+// ];
 const TabMessages = [
   {
-    contenu: "Bonjour Jean \n La voiture est-elle toujours disponible ?",
-    date: "14:18",
-    role: "buyer",
-  },
-  {
-    contenu:
-      "Bonjour, \n Elle est toujours disponible. \n Voulez-vous venir la voir pour un essai ?",
-    date: "14:22",
-    role: "seller",
-  },
-  {
-    contenu: "Oui, samedi a 14h, cela me convient parfaitement !",
-    date: "14:25",
-    role: "buyer",
-  },
-  {
-    contenu: "Ok, a samedi!",
-    date: "14:26",
-    role: "seller",
+    contenu: "",
+    date: "",
+    role: "",
   },
 ];
 // ! Recuperation des informations (Infos Voiture et Vendeur)
@@ -82,14 +89,16 @@ export default function Chat_session() {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messagesHistory, setMessagesHistory] = useState(
     TabMessages || [{ contenu: "", role: "", date: "" }],
-  );
+  ); // ? A revoir pour le format du message (ex: sauter une ligne) et pour le role (buyer ou seller) en fonction de l'utilisateur connecté et du vendeur de la voiture
   const [car, setCar] = useState<Car>();
   const [seller, setSeller] = useState<User>();
+  const [loading, setLoading] = useState(true); // ? A revoir pour le loading (ex: afficher un spinner pendant le chargement des infos de la voiture et du vendeur)
 
   // ! Comportements / Fonctions
   const SendMessage = (e: React.SubmitEvent) => {
     e.preventDefault();
-    if (currentMessage.trim() === "") return;
+
+    if (currentMessage.trim() === "") return; // ? Eviter d'envoyer des messages vides ou composés uniquement d'espaces
 
     const hours = new Date().getHours();
     const min = new Date().getMinutes();
@@ -97,9 +106,9 @@ export default function Chat_session() {
     setMessagesHistory((prev) => [
       ...prev,
       {
-        contenu: currentMessage,
-        date: hours + " : " + min,
-        role: "buyer",
+        contenu: currentMessage, // ? A revoir pour le format du message (ex: sauter une ligne)
+        date: hours + " : " + min, // ? A revoir pour le format de l'heure
+        role: "buyer", // ? A revoir pour le role (buyer ou seller) en fonction de l'utilisateur connecté et du vendeur de la voiture
       },
     ]);
     TabMessages.push(...messagesHistory);
@@ -121,14 +130,16 @@ export default function Chat_session() {
 
   useEffect(() => {
     const fetchInfos = async () => {
-      const car = await getInfoCar(id);
+      setLoading(true); // ? On met le loading a true avant de commencer a fetch les infos de la voiture et du vendeur
+      const car = await getInfoCar(id); // ? On recupere les infos de la voiture grace a son id (ex: marque, model, année, photos, etc...)
       if (car) {
-        setCar(car);
         const ownerId = car?.ownerId as string;
-
         const user = await getInfoSeller(ownerId);
+
+        setCar(car);
         setSeller(user);
       }
+      setLoading(false); // ? On met le loading a false une fois que les infos de la voiture et du vendeur sont recuperees et stockees dans les states respectifs
     };
     fetchInfos();
   }, [id]);
@@ -146,7 +157,11 @@ export default function Chat_session() {
           </Link>
           <div className="flex items-center justify-center">
             <span className="relative p-2 border-2 border-green-600 rounded-full size-15">
-              {car && (
+              {loading ? (
+                <div className="bg-gray-300 border-2 border-green-600 rounded-full size-15 flex items-center justify-center">
+                  <span className="w-6 h-6 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></span>
+                </div>
+              ) : (
                 <Image
                   src={car?.photos[0]?.image_url}
                   alt={car?.photos[0]?.image_url}
@@ -158,9 +173,9 @@ export default function Chat_session() {
               <span className="absolute bottom-1 z-10 right-0 size-2 bg-green-600 rounded-full"></span>
             </span>
             <span className="p-2 flex flex-col items-start justify-center gap-0">
-              <h1 className="font-bold">{seller && seller?.name}</h1>
+              <h1 className="font-bold"> {loading ? "Chargement..." : seller?.name}</h1>
               <h1 className="font-bold text-xl">
-                {car?.brand} {car?.model} {car?.year}
+                {loading ? "Chargement..." : `${car?.brand} ${car?.model} ${car?.year}`}
               </h1>
             </span>
           </div>
@@ -200,9 +215,15 @@ export default function Chat_session() {
       <main className="flex-1 flex flex-col justify-center items-center md:w-3/4 border-x border-gray-400 bg-[url('/pattern.jpg')] bg-cover bg-center bg-no-repeat bg-fixed max-h-[80vh]">
         {/* Message Container */}
         <div className="flex-1 flex flex-col gap-1 py-2 px-4 md:mx-10 w-full h-[70vh] max-h-full overflow-y-auto scroll-m-0 backdrop-blur-xs">
-          {messagesHistory.map((msg, index) => (
-            <Message message={msg} key={index} />
-          ))}
+          {loading ? (
+            <div className="flex items-center justify-center h-full">
+              <span className="w-6 h-6 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></span>
+            </div>
+          ) : (
+            messagesHistory.map((msg, index) => (
+              <Message message={msg} key={index} />
+            ))
+          )}
         </div>
         {/* Message Container */}
       </main>

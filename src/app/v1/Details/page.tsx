@@ -77,7 +77,7 @@ export default function Details() {
       if (car !== null) {
         const ownerId = car?.ownerId as string;
         const user = await getInfoSeller(ownerId); // ? Recuperation des infos du vendeur a partir de son ID
-        
+
         setCar(car); // ? On set la voiture dans le state pour pouvoir l'afficher dans le composant
         setSeller(user); // ? On set le vendeur dans le state pour pouvoir l'afficher dans le composant
       }
@@ -102,10 +102,15 @@ export default function Details() {
     <section className="flex flex-col max-w-screen w-[99vw]">
       <header className="px-5 py-3 text-start bg-white">
         <h1 className="font-bold text-3xl px-2 uppercase">
-          {loading ? "Chargement..." :`${car?.brand} ${car?.model} ${car?.year}`}
+          {loading
+            ? "Chargement..."
+            : `${car?.brand} ${car?.model} ${car?.year}`}
         </h1>
         <p className="px-2 text-sm">
-          {loading ? "Chargement..." : car?.status} | {loading ? "Chargement..." : car?.mileage} km . {loading ? "Chargement..." : car?.fuel} . {loading ? "Chargement..." : car?.transmission}
+          {loading ? "Chargement..." : car?.status} |{" "}
+          {loading ? "Chargement..." : car?.mileage} km .{" "}
+          {loading ? "Chargement..." : car?.fuel} .{" "}
+          {loading ? "Chargement..." : car?.transmission}
         </p>
       </header>
       <main className="flex-1 w-full flex flex-col sm:flex-row sm:items-start items-center p-3 gap-2">
@@ -122,10 +127,6 @@ export default function Details() {
                   sizes="(max-width: 640px) 70vw"
                   className="object-cover"
                 />
-              ) : (
-                <p className="absolute inset-0 text-center italic">
-                  Invalid URL
-                </p>
               )}
             </span>
             <span className="grid grid-cols-4 grid-rows-1 gap-1 p-2">
@@ -139,10 +140,6 @@ export default function Details() {
                     fill
                     sizes="(max-width: 640px) 30vw"
                   />
-                ) : (
-                  <p className="absolute inset-0 text-center italic">
-                    Invalid URL
-                  </p>
                 )}
               </span>
               <span className="relative h-20 lg:h-30 w-full border border-gray-200">
@@ -155,10 +152,6 @@ export default function Details() {
                     fill
                     sizes="(max-width: 640px) 30vw"
                   />
-                ) : (
-                  <p className="absolute inset-0 text-center italic">
-                    Invalid URL
-                  </p>
                 )}
               </span>
               <span className="relative h-20 lg:h-30 w-full border border-gray-200">
@@ -171,10 +164,6 @@ export default function Details() {
                     fill
                     sizes="(max-width: 640px) 30vw"
                   />
-                ) : (
-                  <p className="absolute inset-0 text-center italic">
-                    Invalid URL
-                  </p>
                 )}
               </span>
               <span className="relative h-20 lg:h-30 w-full border border-gray-200">
@@ -187,10 +176,6 @@ export default function Details() {
                     fill
                     sizes="(max-width: 640px) 30vw"
                   />
-                ) : (
-                  <p className="absolute inset-0 text-center italic">
-                    Invalid URL
-                  </p>
                 )}
               </span>
             </span>
@@ -199,7 +184,9 @@ export default function Details() {
             <span>
               <ul className="px-3">
                 <li className="list-disc py-1">
-                      {loading ? "Chargement..." : `Superbe ${car?.brand} ${car?.model} ${car?.year} en excellent
+                  {loading
+                    ? "Chargement..."
+                    : `Superbe ${car?.brand} ${car?.model} ${car?.year} en excellent
                       etat.`}
                 </li>
                 <li className="list-disc py-1">Moteur 2.0L 184 ch</li>
@@ -219,19 +206,27 @@ export default function Details() {
           <Accordion title="Details du vehicule">
             <span className="border-b border-gray-300 flex justify-between items-center p-1">
               <p className="text-start">Annee:</p>
-              <p className="text-end font-bold">{loading ? "Chargement..." : car?.year}</p>
+              <p className="text-end font-bold">
+                {loading ? "Chargement..." : car?.year}
+              </p>
             </span>
             <span className="border-b border-gray-300 flex justify-between items-center p-1">
               <p className="text-start">Kilometrage:</p>
-              <p className="text-end font-bold">{loading ? "Chargement..." : car?.mileage}</p>
+              <p className="text-end font-bold">
+                {loading ? "Chargement..." : car?.mileage}
+              </p>
             </span>
             <span className="border-b border-gray-300 flex justify-between items-center p-1">
               <p className="text-start">Carburant:</p>
-              <p className="text-end font-bold">{loading ? "Chargement..." : car?.fuel}</p>
+              <p className="text-end font-bold">
+                {loading ? "Chargement..." : car?.fuel}
+              </p>
             </span>
             <span className="border-b border-gray-300 flex justify-between items-center p-1">
               <p className="text-start">Transmission:</p>
-              <p className="text-end font-bold">{loading ? "Chargement..." : car?.transmission}</p>
+              <p className="text-end font-bold">
+                {loading ? "Chargement..." : car?.transmission}
+              </p>
             </span>
             <span className="border-b border-gray-300 flex justify-between items-center p-1">
               <p className="text-start">Puissance:</p>

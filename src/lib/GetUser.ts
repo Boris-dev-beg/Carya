@@ -7,9 +7,12 @@ export const GetUser = async (email: string) => {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ email }),
     });
+
     const data = await res.json();
+
     if (!res.ok)
       throw new Error(data.error || "Can't find user : Fatale error");
+    
     return data;
   } catch (err) {
     console.log("Error Finded:", err);

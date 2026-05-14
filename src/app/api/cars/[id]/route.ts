@@ -27,15 +27,18 @@ export async function PUT(
 // ! Recuperation d'une seule voiture
 export async function GET(
   req: Request,
-  context: { params: Promise<{ id: string }> },
+  context: { params: Promise<{ id: string }> }, // ? Le context.params contient les parametres de l'URL, ici on va recuperer l'ID de la voiture a partir de l'URL
 ) {
-  const { id } = await context.params;
-  await Mongoose_connection();
-  const car = await carModel.findById(id);
+  const { id } = await context.params; // ? Recuperation de l'ID de la voiture a partir de l'URL
+
+  await Mongoose_connection(); // ? Connection a la base de donnee
+  const car = await carModel.findById(id); // ? Recuperation de la voiture a partir de son ID
 
   if (!car) {
+    console.log("Car not found");
     return NextResponse.json({ error: "Car not found" }, { status: 404 });
   }
 
+  console.log("Car found:", car);
   return NextResponse.json(car, { status: 200 });
 }

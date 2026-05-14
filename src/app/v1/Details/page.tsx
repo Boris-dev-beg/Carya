@@ -29,21 +29,25 @@ type User = {
   email: string;
 };
 
-// ? Recuperation des infos de la voiture
+// ? Recuperation des infos de la voiture a partir de son ID
 const getCar = async (id: string) => {
   try {
-    const res = await fetch(`/api/cars/${id}`);
+    const res = await fetch(`/api/cars/${id}`); // ? Recuperation des infos de la voiture a partir de son ID
 
-    if (!res.ok) throw new Error("Probleme de recuperation de la voiture !");
+    if (!res.ok) 
+      throw new Error("Probleme de recuperation de la voiture !");
 
     const car = await res.json();
+
+    console.log("Car Data:", car);
     return car;
   } catch (err) {
-    console.log(err);
+
+    console.log("Error Finded:", err);
     return;
   }
 };
-// ? Recuperation des Infos du vendeur
+// ? Recuperation des Infos du vendeur a partir de son ID
 const getInfoSeller = async (id: string) => {
   try {
     const response = await fetch(`/api/getUser/${id}`);
@@ -58,31 +62,31 @@ const getInfoSeller = async (id: string) => {
   }
 };
 export default function Details() {
-  // ! States
-  const params = useSearchParams();
-  const id = params.get("id");
-  const [car, setCar] = useState<Cars>();
-  const [seller, setSeller] = useState<User>();
+  // ! States // ! Hooks
+  const params = useSearchParams(); // ? Permet de recuperer les parametres de l'URL
+  const id = params.get("id"); // ? Recuperation de l'ID de la voiture a partir de l'URL
+  const [car, setCar] = useState<Cars>(); // ? State pour stocker les infos de la voiture
+  const [seller, setSeller] = useState<User>(); // ? State pour stocker les infos du vendeur
 
-  // ! Functions
+  // ! Functions // ! UseEffects
   useEffect(() => {
+    // ? Fonction pour recuperer les infos de la voiture et du vendeur a partir de l'ID de la voiture
     const fecthCar = async () => {
-      const car = await getCar(id as string);
-      setCar(car);
+      const {car} = await getCar(id as string); // ? Recuperation des infos de la voiture a partir de son ID
+      
       if (car) {
-        setCar(car);
         const ownerId = car?.ownerId as string;
-
-        const user = await getInfoSeller(ownerId);
-        setSeller(user);
+        const user = await getInfoSeller(ownerId); // ? Recuperation des infos du vendeur a partir de son ID
+        setCar(car); // ? On set la voiture dans le state pour pouvoir l'afficher dans le composant
+        setSeller(user); // ? On set le vendeur dans le state pour pouvoir l'afficher dans le composant
       }
     };
-    fecthCar();
+    fecthCar(); // ? On appelle la fonction pour recuperer les infos de la voiture et du vendeur a partir de l'ID de la voiture
   }, [id]);
   console.log("Car:", car);
   console.log("Seller:", seller);
 
-  // ! Render
+  // ! Render // ! JSX
   return (
     <section className="flex flex-col max-w-screen w-[99vw]">
       <header className="px-5 py-3 text-start bg-white">

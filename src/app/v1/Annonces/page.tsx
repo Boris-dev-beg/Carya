@@ -20,70 +20,88 @@ interface Cars {
   fuel: string;
 }
 
+// const Tabcars: Cars[] = [
+//   {
+//     _id: "",
+//     photos: [
+//       {
+//         image_url: "/car_Image/product-2.jpg",
+//       },
+//     ],
+//     status: "Promotion",
+//     transmission: "Manuel",
+//     brand: "VW",
+//     model: "Golft",
+//     year: "2019",
+//     price: 218500,
+//     mileage: "40 500",
+//     fuel: "Diesel",
+//   },
+//   {
+//     _id: "",
+//     photos: [
+//       {
+//         image_url: "/car_Image/product-4.jpg",
+//       },
+//     ],
+//     status: "Disponible",
+//     transmission: "Automatique",
+//     brand: "BMW",
+//     model: "Serie 3",
+//     year: "2020",
+//     price: 225500,
+//     mileage: "75 500",
+//     fuel: "Essence",
+//   },
+//   {
+//     _id: "",
+//     photos: [
+//       {
+//         image_url: "/car_Image/product-1.jpg",
+//       },
+//     ],
+//     status: "Reservee",
+//     transmission: "Automatique",
+//     brand: "Audi",
+//     model: "Q5",
+//     year: "2018",
+//     price: 228000,
+//     mileage: "95 500",
+//     fuel: "Diesel",
+//   },
+//   {
+//     _id: "",
+//     photos: [
+//       {
+//         image_url: "/car_Image/product-5.jpg",
+//       },
+//     ],
+//     status: "Nouveau",
+//     transmission: "Automatique",
+//     brand: "Mercedes",
+//     model: "GLC",
+//     year: "2021",
+//     price: 238000,
+//     mileage: "30 500",
+//     fuel: "Hybride",
+//   },
+// ];
 const Tabcars: Cars[] = [
   {
     _id: "",
     photos: [
       {
-        image_url: "/car_Image/product-2.jpg",
+        image_url: "",
       },
     ],
-    status: "Promotion",
-    transmission: "Manuel",
-    brand: "VW",
-    model: "Golft",
-    year: "2019",
-    price: 218500,
-    mileage: "40 500",
-    fuel: "Diesel",
-  },
-  {
-    _id: "",
-    photos: [
-      {
-        image_url: "/car_Image/product-4.jpg",
-      },
-    ],
-    status: "Disponible",
-    transmission: "Automatique",
-    brand: "BMW",
-    model: "Serie 3",
-    year: "2020",
-    price: 225500,
-    mileage: "75 500",
-    fuel: "Essence",
-  },
-  {
-    _id: "",
-    photos: [
-      {
-        image_url: "/car_Image/product-1.jpg",
-      },
-    ],
-    status: "Reservee",
-    transmission: "Automatique",
-    brand: "Audi",
-    model: "Q5",
-    year: "2018",
-    price: 228000,
-    mileage: "95 500",
-    fuel: "Diesel",
-  },
-  {
-    _id: "",
-    photos: [
-      {
-        image_url: "/car_Image/product-5.jpg",
-      },
-    ],
-    status: "Nouveau",
-    transmission: "Automatique",
-    brand: "Mercedes",
-    model: "GLC",
-    year: "2021",
-    price: 238000,
-    mileage: "30 500",
-    fuel: "Hybride",
+    status: "",
+    transmission: "",
+    brand: "",
+    model: "",
+    year: "",
+    price: null as unknown as number,
+    mileage: "",
+    fuel: "",
   },
 ];
 

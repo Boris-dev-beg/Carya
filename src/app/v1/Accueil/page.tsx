@@ -30,54 +30,72 @@ interface Cars {
   fuel: string;
 }
 
+// const Tabcars: Cars[] = [
+//   {
+//     _id: "",
+//     photos: [
+//       {
+//         image_url: "/car_Image/feature-car4.png",
+//       },
+//     ],
+//     status: "Promotion",
+//     transmission: "Manuel",
+//     brand: "Mercedeces",
+//     model: "C 220 ",
+//     year: "2017",
+//     price: 240900,
+//     mileage: "90 500",
+//     fuel: "Diesel",
+//   },
+//   {
+//     _id: "",
+//     photos: [
+//       {
+//         image_url: "/car_Image/feature-car2.png",
+//       },
+//     ],
+//     status: "Promotion",
+//     transmission: "Manuel",
+//     brand: "Mercedeces",
+//     model: "C 220 ",
+//     year: "2017",
+//     price: 240900,
+//     mileage: "90 500",
+//     fuel: "Diesel",
+//   },
+//   {
+//     _id: "",
+//     photos: [
+//       {
+//         image_url: "/car_Image/feature-car1.png",
+//       },
+//     ],
+//     status: "Promotion",
+//     transmission: "Manuel",
+//     brand: "Mercedeces",
+//     model: "C 220 ",
+//     year: "2017",
+//     price: 240900,
+//     mileage: "90 500",
+//     fuel: "Diesel",
+//   },
+// ];
 const Tabcars: Cars[] = [
   {
     _id: "",
     photos: [
       {
-        image_url: "/car_Image/feature-car4.png",
+        image_url: "",
       },
     ],
-    status: "Promotion",
-    transmission: "Manuel",
-    brand: "Mercedeces",
-    model: "C 220 ",
-    year: "2017",
-    price: 240900,
-    mileage: "90 500",
-    fuel: "Diesel",
-  },
-  {
-    _id: "",
-    photos: [
-      {
-        image_url: "/car_Image/feature-car2.png",
-      },
-    ],
-    status: "Promotion",
-    transmission: "Manuel",
-    brand: "Mercedeces",
-    model: "C 220 ",
-    year: "2017",
-    price: 240900,
-    mileage: "90 500",
-    fuel: "Diesel",
-  },
-  {
-    _id: "",
-    photos: [
-      {
-        image_url: "/car_Image/feature-car1.png",
-      },
-    ],
-    status: "Promotion",
-    transmission: "Manuel",
-    brand: "Mercedeces",
-    model: "C 220 ",
-    year: "2017",
-    price: 240900,
-    mileage: "90 500",
-    fuel: "Diesel",
+    status: "",
+    transmission: "",
+    brand: "",
+    model: "",
+    year: "",
+    price: null as unknown as number,
+    mileage: "",
+    fuel: "",
   },
 ];
 

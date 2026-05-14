@@ -1,11 +1,64 @@
-"use client"
+"use client";
+import { GetUser } from "@/src/lib/GetUser";
 import { CalendarDays, Mail, MapPin, Phone, Search } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+// ? Fonction pour formater une date en format "Mois Année" ou Aujourd'hui si la date correspond à la date actuelle
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString); // ? Ex: 2021-08-15T12:00:00Z
+
+  // ? Date actuelle
+  const now = new Date(); // ? Ex: 2024-08-15T12:00:00Z
+
+  // ? Vérifier si c'est le même jour
+  const isToday =
+    date.getDate() === now.getDate() && // ? Si le jour correspond
+    date.getMonth() === now.getMonth() && // ? Si le mois correspondent
+    date.getFullYear() === now.getFullYear(); // ? Si la date correspond à aujourd'hui
+
+  let message; // ? Message à afficher
+  if (isToday) {
+    message = "Membre depuis aujourd'hui"; // ? Si c'est aujourd'hui, afficher "Membre depuis aujourd'hui"
+  } else {
+    // ? Formatter mois et année
+    const options: Intl.DateTimeFormatOptions = {
+      month: "long",
+      year: "numeric",
+    }; // ? Ex: { month: "long", year: "numeric" } => "Aout 2021"
+
+    const formatted = date.toLocaleDateString("fr-FR", options); // ? Ex: "Aout 2021"
+    message = `Membre depuis ${formatted}`; // ? Ex: "Membre depuis Aout 2021"
+  }
+
+  return message; // ? Retourne le message formaté
+};
 
 export default function Profil_Buyer() {
-  const {data} = useSession()
+  // ! Etats / States
+  const { data } = useSession();
+  const email = data?.user?.email as string;
+  const [message, setMessage] = useState("");
+  const [phone, setPhone] = useState("06 23 45 67 89");
+  const location = "Bafoussam, Cameroun";
+  
+  // ! Comportements / Functions
+  useEffect(() => {
+    // ? recuperation des infos de l'utilisateur
+    const fetchUser = async () => {
+      if (!email) return;
+      const data = await GetUser(email);
+      if (data?.user) {
+        setMessage(formatDate(data?.user?.createdAt as string));
+        setPhone(data?.user?.phone);
+      }
+    };
+    fetchUser();
+  }, [email]);
+
+  // ! Affichage / Render
   return (
     <section className="bg-gray-50 flex flex-col justify-center p-3 w-screen h-full max-w-full min-h-screen">
       <header className="flex flex-col items-center justify-center px-4">
@@ -38,13 +91,13 @@ export default function Profil_Buyer() {
                   <Mail /> {data?.user?.email}
                 </p>
                 <p className="flex items-center justify-start gap-2">
-                  <Phone /> 06 23 45 67 89
+                  <Phone /> {phone}
                 </p>
                 <p className="flex items-center justify-start gap-2">
-                  <MapPin /> Paris, France
+                  <MapPin /> {location}
                 </p>
                 <p className="flex items-center justify-start gap-2">
-                  <CalendarDays /> Membre depuis Aujourd&apos;hui
+                  <CalendarDays /> {message}
                 </p>
               </span>
             </span>
@@ -87,38 +140,48 @@ export default function Profil_Buyer() {
   );
 }
 
+// const TabCars = [
+//   {
+//     src_image: "/car_image/bmw.jpeg",
+//     name_car: "BMW Serie 3 2018",
+//     date: "Aout 2021",
+//     carburant: "Essence",
+//     transmission: "Automatique",
+//     kilometrage: "55 000",
+//   },
+//   {
+//     src_image: "/car_image/toyo.jpeg",
+//     name_car: "Toyota 208 2017",
+//     date: "Janv. 2020",
+//     carburant: "Diesel",
+//     transmission: "Manuel",
+//     kilometrage: "30 500",
+//   },
+//   {
+//     src_image: "/car_image/audi.jpeg",
+//     name_car: "Audi Tiguan 2015",
+//     date: "Oct. 2016",
+//     carburant: "Essence",
+//     transmission: "Automatique",
+//     kilometrage: "85 000",
+//   },
+//   {
+//     src_image: "/car_image/kia.jpeg",
+//     name_car: "Kia A4 2017",
+//     date: "Sept. 2014",
+//     carburant: "Diesel",
+//     transmission: "Automatique",
+//     kilometrage: "90 500",
+//   },
+// ];
 const TabCars = [
   {
-    src_image: "/car_image/bmw.jpeg",
-    name_car: "BMW Serie 3 2018",
-    date: "Aout 2021",
-    carburant: "Essence",
-    transmission: "Automatique",
-    kilometrage: "55 000",
-  },
-  {
-    src_image: "/car_image/toyo.jpeg",
-    name_car: "Toyota 208 2017",
-    date: "Janv. 2020",
-    carburant: "Diesel",
-    transmission: "Manuel",
-    kilometrage: "30 500",
-  },
-  {
-    src_image: "/car_image/audi.jpeg",
-    name_car: "Audi Tiguan 2015",
-    date: "Oct. 2016",
-    carburant: "Essence",
-    transmission: "Automatique",
-    kilometrage: "85 000",
-  },
-  {
-    src_image: "/car_image/kia.jpeg",
-    name_car: "Kia A4 2017",
-    date: "Sept. 2014",
-    carburant: "Diesel",
-    transmission: "Automatique",
-    kilometrage: "90 500",
+    src_image: "",
+    name_car: "",
+    date: "",
+    carburant: "",
+    transmission: "",
+    kilometrage: "",
   },
 ];
 

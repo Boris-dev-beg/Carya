@@ -15,6 +15,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { GetUser } from "@/src/lib/GetUser";
+import LogOutButton from "@/src/components/LogOutButton";
 
 export default function NavBar() {
   // ! Etats / States
@@ -108,7 +109,7 @@ export default function NavBar() {
         </div>
       </div>
       {/* Responsive Nav-Bar */}
-      {!data && (
+      {!data ? (
         <div className="hidden sm:flex text-white ">
           <Link
             href="/auth/login"
@@ -117,6 +118,8 @@ export default function NavBar() {
             Se connecter
           </Link>
         </div>
+      ): (
+        <LogOutButton />
       )}
     </header>
   );
@@ -152,7 +155,7 @@ function ResponsiveNavBar({ email, role }: { email: string; role: string }) {
           />
         ))}
       </nav>
-      {!email && (
+      {!email ? (
         <div className="flex flex-col items-center justify-center text-white gap-5 py-5">
           <span className="flex flex-col gap-2.5">
             <Link
@@ -163,7 +166,7 @@ function ResponsiveNavBar({ email, role }: { email: string; role: string }) {
             </Link>
           </span>
         </div>
-      )}
+      ): (<LogOutButton />)}
       <span className="flex-1 w-full flex flex-col text-center justify-end p-3 gap-2">
         <p>&copy; 2026 CARYA</p>
         <p>Tous droits reserves</p>

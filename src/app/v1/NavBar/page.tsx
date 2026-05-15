@@ -42,13 +42,14 @@ export default function NavBar() {
   }, [email]);
   return (
     <header className="z-40 sticky top-0 flex justify-between gap-5 items-center w-full h-20! p-3 bg-emerald-800 shadow-xs shadow-emerald-300 overflow-hidden">
-      <span className="relative w-2/3 h-85 md:size-95">
+      <span className="relative w-full h-85 md:size-95">
         <Image
           src={"/logo_1.png"}
           alt="Logo"
           className="rounded-full"
           fill
-          sizes="(max-widht: 640px) 30vw"
+          loading="eager"
+          sizes="(max-widht: 640px) 50vw"
         />
       </span>
       <button
@@ -119,7 +120,7 @@ export default function NavBar() {
           </Link>
         </div>
       ): (
-        <LogOutButton />
+        <span className="hidden sm:flex"><LogOutButton /></span>
       )}
     </header>
   );
@@ -128,7 +129,7 @@ export default function NavBar() {
 function ResponsiveNavBar({ email, role }: { email: string; role: string }) {
   return (
     <div className="flex-1 flex flex-col w-full items-start px-2">
-      <nav className="flex flex-col items-start justify-center border-b border-emerald-400 gap-3 p-4 w-2/4 text-white">
+      <nav className="flex flex-col items-start justify-center border-b border-emerald-400 gap-3 p-4 mb-2 w-3/4 text-white">
         {[
           { href: "/v1/Accueil", label: "Accueil", icon: Home },
           { href: "/v1/Annonces", label: "Nos Annonces", icon: CarFront },

@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Session dans laquelle l'authentification est accessible
+ * ! Session dans laquelle l'authentification est accessible
  */
 
 import {SessionProvider} from "next-auth/react"

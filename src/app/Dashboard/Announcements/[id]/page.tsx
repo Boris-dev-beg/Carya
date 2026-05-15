@@ -103,7 +103,7 @@ export default function EditAnnounce() {
   const handleSubmit = async(e: React.SubmitEvent) => {
     e.preventDefault()
     try{
-      const res = await fetch(`http://localhost:3000/api/cars/${id}`, {
+      const res = await fetch(`/api/cars/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

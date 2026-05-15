@@ -26,14 +26,14 @@ export default function NavBar() {
     return () => setShow_Responsive_navbar(false);
   }, [pathName]);
   return (
-    <header className="z-20 sticky -top-3 flex items-center justify-between px-3 h-20 w-full overflow-hidden bg-white text-emerald-800 shadow-lg shadow-gray-300">
+    <>
       <Link
         href="/v1/Accueil"
         className="hover:bg-emerald-800 hover:text-white p-2 rounded-md flex items-center justify-center transition-all duration-300"
       >
         <ArrowBigLeftDash />
       </Link>
-      <span className="relative h-70 w-full md:w-1/4 mt-5">
+      <span className="relative h-70 w-full md:w-2/4 lg:w-1/3 mt-5">
         <Image
           src="/logo1.png"
           alt="/logo1.png"
@@ -64,7 +64,6 @@ export default function NavBar() {
             label={link.label}
             href={link.href}
             icon={link.icon}
-            isResponsive
           />
         ))}
       </nav>
@@ -79,7 +78,7 @@ export default function NavBar() {
         href="/Dashboard/Add_Announcement"
         className="hidden md:flex items-center justify-center gap-2 shadow-md shadow-green-700 rounded-md py-3 px-5 text-white bg-emerald-800 hover:bg-emerald-700 hover:shadow-emerald-600 transition-colors duration-300"
       >
-        <ClipboardPlus /> Deposer une annonce
+        <ClipboardPlus /> <p className="hidden lg:block">Deposer une annonce</p>
       </Link>
       <button
         className="hover:bg-emerald-800 hover:text-white p-2 rounded-md md:hidden flex items-center justify-center transition-all duration-300"
@@ -124,14 +123,14 @@ export default function NavBar() {
         </div>
       )}
       {/* Responsive NavBar */}
-    </header>
+    </>
   );
 }
 
 function ResponsiveNavBar() {
   return (
     <div className="flex-1 flex flex-col w-full items-start px-2">
-      <nav className="flex flex-col items-start justify-center border-b border-emerald-400 gap-3 p-4 w-2/4 bg-white">
+      <nav className="flex flex-col items-start justify-center border-b border-emerald-400 gap-3 p-4 w-3/4 bg-white">
         {[
           { href: "/Dashboard", label: "Tableau de bord", icon: ChartArea },
           {

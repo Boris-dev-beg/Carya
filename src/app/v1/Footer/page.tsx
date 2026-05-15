@@ -7,15 +7,18 @@ export default function Footer() {
     <footer className="p-3 flex flex-col bg-emerald-800 text-white">
       <div className="flex lg:flex-row  lg:text-start items-center lg:items-start flex-col justify-between lg:px-6 lg:py-3 border-b border-gray-500">
         <div className="flex flex-col sm:items-start items-center gap-4 w-full md:max-w-1/2">
-          <span className="relative w-2/3 h-55 md:size-55">
+          <div className="overflow-hidden w-full h-20 flex items-center justify-center">
+            <span className="relative w-full h-85 md:size-95">
                   <Image
                     src={"/logo_1.png"}
                     alt="Logo"
                     className="rounded-full"
                     fill
-                    sizes="(max-widht: 640px) 20vw"
+                    loading="eager"
+                    sizes="(max-widht: 640px) 50vw"
                   />
                 </span>
+          </div>
           <p className="max-w-xl text-center sm:text-start wrap-normal">
             La voiture qu’il vous faut, au bout d’un message.
           </p>
@@ -64,9 +67,9 @@ export default function Footer() {
       </div>
       <div className="flex md:flex-row flex-col items-center justify-between px-2 py-3 text-center text-[13px]">
         <p>&copy; 2026 CARYA. Tout droit reserver</p>
-        <span className="flex gap-3">
+        <span className="flex gap-1 items-center justify-center">
           <a className="underline">Politique de confidentialite</a>
-          <Dot />
+          <b className="bg-white size-1 rounded-full"></b>
           <a className="underline">Condition d&apos;utilisation</a>
         </span>
       </div>

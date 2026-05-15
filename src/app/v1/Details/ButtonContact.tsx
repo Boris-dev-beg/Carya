@@ -5,9 +5,15 @@ import { MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-export function ButtonContact({id, sellerPhone}: {id?: string, sellerPhone?: string}) {
+export function ButtonContact({
+  id,
+  sellerPhone,
+}: {
+  id?: string;
+  sellerPhone?: string;
+}) {
   const [show, setShow] = useState(false);
-  
+
   // ? Redirection vers WhatsApp
   const handleClick = () => {
     const url = `https://wa.me/237${sellerPhone}`;
@@ -22,11 +28,17 @@ export function ButtonContact({id, sellerPhone}: {id?: string, sellerPhone?: str
         Contacter le Vendeur
       </button>
       {show && (
-        <span className="rounded-md py-4 px-2 flex items-center justify-center gap-2 absolute top-full -left-10">
-          <button onClick={handleClick} className="text-emerald-800 bg-white py-2 px-3 hover:bg-emerald-800 hover:text-white shadow-xs shadow-emerald-900 rounded-md flex gap-2">
+        <span className="rounded-md py-4 px-2 flex items-center justify-center gap-2 absolute top-full -left-0">
+          <button
+            onClick={handleClick}
+            className="bg-emerald-600 text-white py-2 px-3 hover:bg-emerald-800 shadow-xs shadow-emerald-900 rounded-md flex gap-2 transition-colors duration-300"
+          >
             <WhatsApp /> WhatsApp
           </button>
-          <Link href={`/v1/Chat/${id}`} className="text-emerald-800 bg-white py-2 px-3 hover:bg-emerald-800 hover:text-white shadow-xs shadow-emerald-900 rounded-md flex gap-2">
+          <Link
+            href={`/v1/Chat/${id}`}
+            className="text-emerald-800 bg-white py-2 px-3 hover:bg-emerald-800 hover:text-white shadow-xs shadow-emerald-900 rounded-md flex gap-2 transition-colors duration-300"
+          >
             <MessageCircle /> Message
           </Link>
         </span>

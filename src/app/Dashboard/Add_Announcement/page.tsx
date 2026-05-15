@@ -50,15 +50,12 @@ export default function Add_Announcement() {
     e.preventDefault();
 
     // ? Verification que les champs ne sont pas vides ou invalides
-    const isNull = Object.entries(formData).some(([key, val]) => {
-      if (typeof val === "string") {
-        return val.trim() === "";
-      }
-      if (typeof val === "number") {
-        return val <= 0;
-      }
-      return false;
-    });
+    const isNull =
+      formData.brand.trim() === "" ||
+      formData.model.trim() === "" ||
+      formData.year <= 0 ||
+      formData.mileage <= 0 ||
+      formData.price <= 0;
 
     if (isNull) {
       // ? Si les valeurs sont null envoyer un message d'erreur
@@ -101,6 +98,7 @@ export default function Add_Announcement() {
       }
       router.push("/Dashboard");
     } catch (error) {
+      alert("Erreur lors de la creation de l'annonce. Veuillez reessayer.");
       console.log("Erreur de creation de la voiture:", error);
     } finally {
       setError("");
@@ -119,6 +117,8 @@ export default function Add_Announcement() {
       ...prev,
       [name]: value,
     }));
+
+    console.log(name, typeof value);
   };
 
   // ? Fonction pour le retour au dashboard et annuler ajout de la voiture
@@ -163,6 +163,9 @@ export default function Add_Announcement() {
               <option value="">Marque</option>
               <option value="audi">Audi</option>
               <option value="bmw">BMW</option>
+              <option value="mercedes">Mercedes</option>
+              <option value="toyota">Toyota</option>
+              <option value="honda">Honda</option>
             </select>
             <select
               name="model"
@@ -173,6 +176,12 @@ export default function Add_Announcement() {
               <option value="">Modele</option>
               <option value="serie">Serie</option>
               <option value="q5">Q5</option>
+              <option value="q7">Q7</option>
+              <option value="s5">S5</option>
+              <option value="s7">S7</option>
+              <option value="x5">X5</option>
+              <option value="x7">X7</option>
+              <option value="d2">D2</option>
             </select>
             <select
               name="year"
@@ -181,8 +190,16 @@ export default function Add_Announcement() {
               className="outline-none border border-gray-400 rounded-md p-2 w-full md:w-1/4"
             >
               <option value="">Annee</option>
+              <option value="1980">1980</option>
+              <option value="1985">1985</option>
+              <option value="1990">1990</option>
+              <option value="1995">1995</option>
+              <option value="2000">2000</option>
+              <option value="2005">2005</option>
               <option value="2010">2010</option>
-              <option value="1955">1955</option>
+              <option value="2015">2015</option>
+              <option value="2020">2020</option>
+              <option value="2025">2025</option>
             </select>
           </span>
           <span className="w-full flex items-center gap-2 py-2">

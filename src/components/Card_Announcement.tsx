@@ -21,7 +21,7 @@ export const CardAnnouncement = ({
   msg,
   id,
 }: Car) => {
-  if(!src_image || !name ) return null;
+  if (!src_image || !name) return null;
   return (
     <div className="flex flex-col md:flex-row shadow-md shadow-gray-400 rounded-md w-full bg-white">
       {/* Details */}
@@ -41,8 +41,8 @@ export const CardAnnouncement = ({
           </h1>
         </span>
         <div className="flex flex-col gap-1 w-full">
-          <span className="w-full flex justify-between items-start pr-5 pt-1">
-            <h1 className="font-bold text-[18px] md:text-2xl uppercase">
+          <span className="w-full flex items-start pr-5 md:pr-2 pt-1 gap-2">
+            <h1 className="font-bold text-[16px] md:text-xl uppercase">
               {name?.toLocaleUpperCase()}
             </h1>
             <h1 className="text-xl md:text-2xl font-black">
@@ -75,7 +75,7 @@ export const CardAnnouncement = ({
       </div>
       {/* Actions */}
       <div
-        className={`py-2 px-1 flex items-center gap-3 ${status === "Vendue" ? "md:justify-start justify-center" : "justify-start"} border-t border-gray-300 w-full md:w-1/3 min-w-2/5`}
+        className={`py-2 px-1 flex items-center flex-wrap gap-3 ${status === "Vendue" ? "md:justify-start justify-center" : "justify-start"} border-t border-gray-300 w-full md:w-1/3 min-w-2/5`}
       >
         {status === "Vendue" ? (
           <button className="shadow shadow-gray-300 border border-gray-300 py-1 px-4 text-center bg-gray-50 hover:bg-gray-100 text-black rounded-md flex items-center justify-center gap-2">

@@ -119,7 +119,7 @@ export default function Annonces() {
       const cars = await getCars();
       setCars((prev) => [...prev, ...cars]);
       console.log("Cars: ", cars);
-      
+
       setLoading(false); // ? On set l'etat de chargement a false une fois les infos recuperées
     };
     fetchCars();
@@ -132,9 +132,7 @@ export default function Annonces() {
         {loading ? (
           <Loading />
         ) : cars ? (
-          cars.map((car, index) => (
-            <CarCard key={index} car={car} />
-          ))
+          cars.map((car, index) => <CarCard key={index} car={car} />)
         ) : (
           <p>Aucune voiture disponible</p>
         )}

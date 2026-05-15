@@ -1,8 +1,10 @@
+"use client";
 import type { Metadata } from "next";
 import Footer from "./Footer/page";
 import NavBar from "./NavBar/page";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import Loading from "@/src/components/load/loading";
+import { useRouter } from "next/navigation";
 
 export const metaData: Metadata = {
     title: "Carya : Page d'accueil",
@@ -10,6 +12,10 @@ export const metaData: Metadata = {
 }
 
 export default function Layout({ children }: Readonly<{children: React.ReactNode}>){
+    const route = useRouter();
+    useEffect(() => {
+        window.scrollTo({top: 0, behavior: "smooth"})
+    }, [route])
     return(
         <section className="bg-gray-200 flex flex-col min-w-full min-h-screen">
         <NavBar />

@@ -13,6 +13,7 @@ type User = {
   role: string;
 };
 type Car = {
+  _id: string;
   brand: string;
   year: string;
   model: string;
@@ -52,7 +53,7 @@ const TabMessages = [
   },
 ];
 // ! Recuperation des informations (Infos Voiture et Vendeur)
-const getInfoSeller = async (id: string) => {
+const getInfoSeller = async (id: string) => { // ? Recuperer les infos du vendeur grace a son id (ex: nom, role, etc...)
   try {
     const response = await fetch(`/api/getUser/${id}`);
 
@@ -65,7 +66,7 @@ const getInfoSeller = async (id: string) => {
     return;
   }
 };
-const getInfoCar = async (id: string) => {
+const getInfoCar = async (id: string) => { // ? Recuperer les infos de la voiture grace a son id (ex: marque, model, année, photos, etc...)
   try {
     const response = await fetch(`/api/cars/${id}`);
 
@@ -83,15 +84,19 @@ const getInfoCar = async (id: string) => {
 export default function Chat_session() {
   // ! States / Etats
   const params = useParams();
-  const id = params.id as string;
+  const id = params.id as string; // ? Recuperer l'id de la voiture a partir de l'url (ex: /v1/Chat/123 => id = 123)
+
   const [show, setShow] = useState(false);
-  const refShow = useRef<HTMLDivElement | null>(null);
+  const refShow = useRef<HTMLDivElement | null>(null); // ? Ref pour le show du menu (ex: info sur le vendeur, voir l'annonce, clear chat) afin de pouvoir detecter les clicks en dehors du menu et le fermer automatiquement
+
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messagesHistory, setMessagesHistory] = useState(
     TabMessages || [{ contenu: "", role: "", date: "" }],
   ); // ? A revoir pour le format du message (ex: sauter une ligne) et pour le role (buyer ou seller) en fonction de l'utilisateur connecté et du vendeur de la voiture
+
   const [car, setCar] = useState<Car>();
   const [seller, setSeller] = useState<User>();
+
   const [loading, setLoading] = useState(true); // ? A revoir pour le loading (ex: afficher un spinner pendant le chargement des infos de la voiture et du vendeur)
 
   // ! Comportements / Fonctions
@@ -102,12 +107,14 @@ export default function Chat_session() {
 
     const hours = new Date().getHours();
     const min = new Date().getMinutes();
+    const newhour = hours > 9 ? hours : "0" + hours;
+    const newmin = min > 9 ? min : "0" + min;
 
     setMessagesHistory((prev) => [
       ...prev,
       {
         contenu: currentMessage, // ? A revoir pour le format du message (ex: sauter une ligne)
-        date: hours + " : " + min, // ? A revoir pour le format de l'heure
+        date: newhour + " : " + newmin, // ? A revoir pour le format de l'heure
         role: "buyer", // ? A revoir pour le role (buyer ou seller) en fonction de l'utilisateur connecté et du vendeur de la voiture
       },
     ]);
@@ -147,7 +154,7 @@ export default function Chat_session() {
   // ! Rendue / Affichage
   return (
     <>
-      <header className="flex justify-between px-4 py-2 border-b border-gray-500 bg-white rounded-t-md text-black md:w-3/4 w-full">
+      <header className="flex justify-between px-4 py-2 border-b border-gray-500 bg-white rounded-t-md text-black md:w-3/4 w-full h-20 items-center">
         <div className="flex items-center gap-1 justify-center">
           <Link
             href="/v1/Chat"
@@ -200,7 +207,7 @@ export default function Chat_session() {
                 Info sur le vendeur
               </Link>
               <Link
-                href="/v1/Details"
+                href={`/v1/Details?id=${car?._id}`} // ? Rediriger vers la page de details de la voiture en question
                 className="hover:bg-gray-300 rounded-md transition-colors duration-300 text-center py-1.5 px-2"
               >
                 Voir l&lsquo;annonce
@@ -212,7 +219,7 @@ export default function Chat_session() {
           )}
         </div>
       </header>
-      <main className="flex-1 flex flex-col justify-center items-center w-full md:w-3/4 border-x border-gray-400 bg-[url('/pattern.jpg')] bg-cover bg-center bg-no-repeat bg-fixed max-h-[80vh]">
+      <main className="flex-1 flex flex-col justify-center items-center w-full md:w-3/4 border-x border-gray-400 bg-[url('/pattern.jpg')] bg-cover bg-center bg-no-repeat bg-fixed max-h-[76vh]">
         {/* Message Container */}
         <div className="flex-1 flex flex-col gap-1 py-2 px-4 md:mx-10 w-full h-[70vh] max-h-full overflow-y-auto scroll-m-0 backdrop-blur-xs">
           {loading ? (
@@ -228,7 +235,7 @@ export default function Chat_session() {
         {/* Message Container */}
       </main>
       {/* Action Container */}
-      <div className="bg-white w-full py-2 px-4 md:px-30 flex flex-col items-center justify-center gap-1 md:w-3/4 rounded-b-md border-b-2 border-gray-300">
+      <div className="bg-white w-full py-2 px-4 md:px-30 flex flex-col items-center justify-center gap-1 md:w-3/4 h-15 rounded-b-md border-b-2 border-gray-300">
         <form
           onSubmit={SendMessage}
           className="w-4/5 overflow-hidden pl-4 py-2 pr-2 flex items-center rounded-full border border-emerald-950"

@@ -28,6 +28,8 @@ interface Cars {
   price: number;
   mileage: string;
   fuel: string;
+  ownerId: string;
+  sellerPhone: string;
 }
 
 // const Tabcars: Cars[] = [
@@ -96,6 +98,8 @@ const Tabcars: Cars[] = [
     price: null as unknown as number,
     mileage: "",
     fuel: "",
+    ownerId: "",
+    sellerPhone: "",
   },
 ];
 
@@ -120,7 +124,7 @@ export default function Accueil() {
       ),
   );
 
-  // ? Recuperation de l'utilisateur
+  // ? Recuperation de l'utilisateur connecter
   useEffect(() => {
     const fetchUser = async () => {
       if (!email) return;
@@ -148,7 +152,7 @@ export default function Accueil() {
   return (
     <section className="w-full">
       <HERO value={searchValue} setValue={(a) => setSearchValue(a)} />
-      <div className="flex flex-col w-full p-10 gap-3">
+      <div className="flex flex-col w-full gap-3 py-5">
         <h1 className="text-4xl font-bold pl-2 lg:pl-4 text-emerald-700">
           Meilleurs Annonces
         </h1>
@@ -183,6 +187,7 @@ export default function Accueil() {
   );
 }
 
+// ? Composant de la section hero de la page d'accueil
 function HERO({
   value,
   setValue,
@@ -205,10 +210,10 @@ function HERO({
       </div>
       <div className="text-white absolute lg:z-10 w-full h-full p-5 lg:p-10">
         <span className="p-5 lg:p-10 flex flex-col justify-center items-start gap-3">
-          <h1 className="text-5xl font-black">
+          <h1 className="max-w-xl text-3xl md:text-5xl font-black line-clamp-2">
             Trouvez la voiture de vos reves
           </h1>
-          <p className="max-w-2xl text-lg">
+          <p className="max-w-2xl text-base md:text-lg line-clamp-2">
             Appuyez et contactez facilement les vendeurs proche de chez vous
           </p>
         </span>
@@ -219,7 +224,6 @@ function HERO({
     </div>
   );
 }
-
 function Input({
   value,
   setValue,
@@ -233,7 +237,7 @@ function Input({
   return (
     <div className="flex flex-col bg-white text-black rounded-md w-full lg:w-2/3">
       <span className="flex items-center w-full gap-2 p-2">
-        <button className="p-3 flex items-center justify-center transition-colors duration-300">
+        <button onClick={()=>setValue(value as string)} className="p-3 flex items-center justify-center transition-colors duration-300">
           <Search />
         </button>
         <input
@@ -243,7 +247,7 @@ function Input({
           placeholder="Rechercher un vehicule..."
           className="pt-2 px-2 flex-1 outline-none focus:border-b"
         />
-        <button className="p-3 bg-emerald-700 text-white rounded-md">
+        <button onClick={() => setValue(value as string)} className="hidden sm:flex p-3 bg-emerald-700 text-white rounded-md">
           Rechercher
         </button>
       </span>
@@ -298,9 +302,10 @@ function Input({
   );
 }
 
+// ? Composant pour afficher les meilleures voitures
 function Best({ Cars }: {Cars: Cars[]}) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 place-items-center">
+    <div className="px-10 grid grid-cols-1 md:grid-cols-2 gap-8 place-items-center">
       {Cars.map((car, index) => (
         <Card key={index} car={car} />
       ))}
@@ -325,9 +330,10 @@ const aboutCard = [
     description: "Echangez directement avec les vendeurs",
   },
 ];
+// ? Composant pour la section "Pourquoi choisir CARYA ?" de la page d'accueil
 function About() {
   return (
-    <div className="w-[90%] lg:w-2/3 grid grid-cols-3 lg:px-10 gap-5 lg:gap-10 relative place-items-center bg-white shadow-md shadow-white/50 rounded-md p-3">
+    <div className="w-[90%] lg:w-2/3 grid grid-cols-1 sm:grid-cols-3 lg:px-10 gap-5 lg:gap-10 relative place-items-center bg-white shadow-md shadow-white/50 rounded-md p-3">
       {aboutCard.map((card, index) => (
         <AboutCard
           key={index}
@@ -351,10 +357,10 @@ function AboutCard({ icon: Icon, titre, description }: Props) {
     <span className="flex flex-col items-center text-center justify-center relative gap-2 h-40 pt-5">
       <Icon className="absolute -top-12 lg:-top-18 size-20 lg:size-30 text-emerald-950" />
       <span className="h-3/4 lg:h-2/3">
-        <h1 className="font-bold text-emerald-800 text-base lg:text-2xl">
+        <h1 className="font-bold text-emerald-800 text-base lg:text-2xl line-clamp-2">
           {titre}
         </h1>
-        <p>{description}</p>
+        <p className="text-base tect-justify line-clamp-3">{description}</p>
       </span>
     </span>
   );

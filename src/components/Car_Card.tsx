@@ -20,10 +20,10 @@ export function CarCard({ car }: { car: Cars }) {
   if(!car?.photos?.[0]?.image_url || !car?.brand || !car?.model) return null; // ? Si la voiture n'est pas définie, on ne rend rien
   return (
     <div className="rounded-md flex flex-row lg:flex-col items-center justify-center h-40 lg:h-90 w-full shadow-xs shadow-gray-700 overflow-hidden bg-white">
-      <span className="relative w-3/5 lg:w-full h-full">
+      <span className="relative w-5/6 md:w-4/5 lg:w-full h-full">
         {/* Image de la voiture */}
        {car ? <Image
-          src={`${car?.photos[0]?.image_url}`}
+          src={car?.photos[0]?.image_url}
           alt={car?.photos[0]?.image_url}
           fill
           sizes="(max-widht:640px) 30vw"

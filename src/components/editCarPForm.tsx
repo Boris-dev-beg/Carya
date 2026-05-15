@@ -14,14 +14,6 @@ interface Props{
 }
 
 export default function EditCarForm({values, onChange, handleSubmit}: Props){
-  // const [formData, setFormData] = useState({
-  //   title: title,
-  //   price: price,
-  //   model: model,
-  //   brand: brand,
-  //   description: description,
-  //   city: city,
-  // });
     return(<form
       className="flex flex-col gap-3 justify-center p-5 w-1/2 border border-gray-300 bg-slate-500 rounded-md"
       onSubmit={handleSubmit}

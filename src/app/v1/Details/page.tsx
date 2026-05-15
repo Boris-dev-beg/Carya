@@ -118,31 +118,50 @@ export default function Details() {
           <div className="flex flex-col w-full gap-1 lg:h-130 bg-white">
             <span className="relative h-60 lg:h-full w-full border border-gray-200">
               {loading ? (
-                <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+                <div className="w-20 h-20 bg-gray-200 animate-pulse"></div>
               ) : (
                 <Image
-                  src={car?.photos[0]?.image_url as string}
+                  src={
+                    (car?.photos[0]?.image_url as string) || "/placeholder.png"
+                  }
                   alt={car?.photos[0]?.image_url as string}
                   fill
+                  loading="eager"
                   sizes="(max-width: 640px) 70vw"
                   className="object-cover"
                 />
               )}
             </span>
             <span className="grid grid-cols-4 grid-rows-1 gap-1 p-2">
-              <span className="relative h-20 lg:h-30 w-full scale-90 ring ring-emerald-700 p-3">
-                {loading ? (
-                  <div className="w-full h-full bg-gray-200 animate-pulse"></div>
-                ) : (
-                  <Image
-                    src={car?.photos[1]?.image_url as string}
-                    alt={car?.photos[1]?.image_url as string}
-                    fill
-                    sizes="(max-width: 640px) 30vw"
-                  />
-                )}
-              </span>
-              <span className="relative h-20 lg:h-30 w-full border border-gray-200">
+              {loading
+                ? Array.from({ length: 4 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className="w-full h-20 lg:h-30 bg-gray-200 animate-pulse"
+                    ></div>
+                  ))
+                : car?.photos.slice(1, 5).map((photo, index) => (
+                    <span
+                      key={index}
+                      className="relative h-20 lg:h-30 w-full scale-90 ring ring-emerald-700 p-3"
+                    >
+                      {loading ? (
+                        <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+                      ) : (
+                        <Image
+                          src={
+                            (photo.image_url as string) || "/placeholder.png"
+                          }
+                          alt={
+                            (photo.image_url as string) || "/placeholder.png"
+                          }
+                          fill
+                          sizes="(max-width: 640px) 30vw"
+                        />
+                      )}
+                    </span>
+                  ))}
+              {/* <span className="relative h-20 lg:h-30 w-full border border-gray-200">
                 {loading ? (
                   <div className="w-full h-full bg-gray-200 animate-pulse"></div>
                 ) : (
@@ -177,7 +196,7 @@ export default function Details() {
                     sizes="(max-width: 640px) 30vw"
                   />
                 )}
-              </span>
+              </span> */}
             </span>
           </div>
           <Accordion title="Description du vehicule">
@@ -202,7 +221,7 @@ export default function Details() {
             </span>
           </Accordion>
         </div>
-        <div className="w-full sm:w-1/2 lg:w-1/3 grid grid-cols-2 sm:grid-cols-1 gap-1 place-items-center">
+        <div className="w-full sm:w-1/2 lg:w-1/3 grid grid-cols-1 gap-1 place-items-center">
           <Accordion title="Details du vehicule">
             <span className="border-b border-gray-300 flex justify-between items-center p-1">
               <p className="text-start">Annee:</p>
@@ -234,7 +253,7 @@ export default function Details() {
             </span>
             <span className="border-b border-gray-300 flex justify-between items-center p-1">
               <p className="text-start">Localisation:</p>
-              <p className="text-end font-bold">Paris</p>
+              <p className="text-end font-bold">Bafoussam, Cameroun</p>
             </span>
           </Accordion>
           <Accordion title="Prix et Contact">
@@ -245,7 +264,10 @@ export default function Details() {
               <ButtonContact
                 id={car ? car?._id : ""}
                 sellerPhone={
-                  (seller?.phone || "698902641").replace(/\s/g, "") // ? On retire les espaces du numero de telephone pour s'assurer qu'il est au bon format pour WhatsApp
+                  (seller?.phone || "698902641").replace(
+                    /(\d{3})(?=\d{3})/g,
+                    "$1 ",
+                  ) // ? Formater le numéro de téléphone en ajoutant des espaces tous les 3 chiffres
                 }
               />
             </span>
